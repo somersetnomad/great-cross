@@ -1,0 +1,25 @@
+{
+  "name": "The Great Cross of the Watchtowers",
+  "short_name": "Great Cross",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#060608",
+  "theme_color": "#0c0a06",
+  "icons": [
+    {
+      "src": "apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

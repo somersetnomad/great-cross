@@ -1,0 +1,1933 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Explore John Dee's Enochian Watchtowers in 3D. Unveil the Holy Names, Seniors and Kings of the Great Cross, learn where the tables came from, and share what you find.">
+<meta name="theme-color" content="#0c0a06">
+<link rel="canonical" href="https://somersetnomad.github.io/great-cross/">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="The Great Cross">
+<meta property="og:title" content="The Great Cross of the Watchtowers">
+<meta property="og:description" content="Explore John Dee's Enochian Watchtowers in 3D. Unveil the Holy Names, Seniors and Kings of the Great Cross, learn where the tables came from, and share what you find.">
+<meta property="og:url" content="https://somersetnomad.github.io/great-cross/">
+<meta property="og:image" content="https://somersetnomad.github.io/great-cross/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The Great Cross of the Air Watchtower as a grid of letters, beside the title The Great Cross.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Great Cross of the Watchtowers">
+<meta name="twitter:description" content="Explore John Dee's Enochian Watchtowers in 3D. Unveil the Holy Names, Seniors and Kings of the Great Cross, learn where the tables came from, and share what you find.">
+<meta name="twitter:image" content="https://somersetnomad.github.io/great-cross/og-image.png">
+<title>Great Cross of the Watchtowers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Spectral:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: full-bleed WebGL void; tablet title top-left, element switcher top-right,
+   revelation console bottom-left, dossier slides in from the right (bottom sheet on phones). */
+:root{
+  --void:#060608;
+  --ink:#efe9da;
+  --muted:#a59e8e;
+  --faint:#6f695e;
+  --glass:rgba(16,15,14,.56);
+  --glass-strong:rgba(17,16,14,.82);
+  --hair:rgba(239,233,218,.12);
+  --hair-strong:rgba(239,233,218,.24);
+  --accent:#f5c451;
+  --accent-ink:#1a1306;
+  --f-display:"Cinzel","Trajan Pro",Georgia,"Times New Roman",serif;
+  --f-body:"Spectral",Georgia,"Times New Roman",serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  --r:14px;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
+img{max-width:100%}
+html,body{height:100%}
+body{margin:0;background:var(--void);color:var(--ink);font:15px/1.5 var(--f-body);overflow:hidden;-webkit-font-smoothing:antialiased}
+#gl{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:none;outline:none;cursor:grab}
+#gl.pointing{cursor:pointer}
+.vignette{position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse 75% 70% at 50% 46%,transparent 50%,rgba(0,0,0,.6) 100%)}
+
+.hud{position:fixed;inset:0;pointer-events:none;display:flex;flex-direction:column;justify-content:space-between;gap:16px;
+  padding-block:calc(14px + env(safe-area-inset-top,0px)) calc(14px + env(safe-area-inset-bottom,0px));
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.hud > *{pointer-events:auto}
+.top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;pointer-events:none}
+.top > *{pointer-events:auto}
+
+.brand .eyebrow{margin:0 0 4px;font:500 11px/1.2 var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--accent);transition:color .6s}
+.brand h1{margin:0;font:600 clamp(24px,3.4vw,40px)/1 var(--f-display);letter-spacing:.06em;text-wrap:balance}
+.brand .hint{margin:8px 0 0;font:400 12px/1.3 var(--f-mono);color:var(--faint);letter-spacing:.04em}
+
+.top-controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.switcher{display:flex;gap:3px;padding:4px;border-radius:12px;background:var(--glass);border:1px solid var(--hair);backdrop-filter:blur(14px) saturate(1.2);-webkit-backdrop-filter:blur(14px) saturate(1.2)}
+.switcher button{appearance:none;border:0;background:transparent;color:var(--muted);font:600 12px/1 var(--f-display);letter-spacing:.14em;text-transform:uppercase;padding:9px 12px 9px 10px;border-radius:9px;display:flex;align-items:center;gap:8px;cursor:pointer;transition:background .35s,color .35s,box-shadow .35s,transform .15s}
+.switcher button svg{width:15px;height:15px;flex:none}
+.switcher button small{font:500 10px/1 var(--f-mono);letter-spacing:.06em;text-transform:none;opacity:.7}
+.switcher button:hover{color:var(--ink);background:rgba(255,255,255,.05)}
+.switcher button:active{transform:translateY(1px)}
+.switcher button[aria-pressed="true"]{color:var(--accent-ink);background:var(--accent);box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 8px 26px -8px var(--accent)}
+.icon-btn{appearance:none;border:1px solid var(--hair);background:var(--glass);color:var(--muted);height:42px;padding:0 13px;border-radius:12px;display:flex;align-items:center;gap:8px;font:500 11px/1 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;cursor:pointer;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);transition:color .3s,border-color .3s}
+.icon-btn svg{width:16px;height:16px}
+.icon-btn:hover,.icon-btn[aria-pressed="true"]{color:var(--ink);border-color:var(--hair-strong)}
+.icon-btn[aria-pressed="true"] .wave{opacity:1}
+.icon-btn .wave{opacity:.25;transition:opacity .3s}
+
+button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.console{max-width:540px;background:var(--glass);border:1px solid var(--hair);border-radius:var(--r);backdrop-filter:blur(16px) saturate(1.2);-webkit-backdrop-filter:blur(16px) saturate(1.2);padding:16px 18px;display:grid;gap:12px}
+.console .eyebrow{margin:0;font:500 11px/1 var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
+.console h2{margin:4px 0 0;font:600 22px/1.15 var(--f-display);letter-spacing:.05em;text-wrap:balance}
+.console p.copy{margin:0;color:var(--muted);max-width:58ch;font-size:14.5px}
+.console p.note{margin:0;color:var(--faint);font:italic 400 13px/1.4 var(--f-body)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font:500 12px/1 var(--f-mono);letter-spacing:.1em;padding:6px 10px;border-radius:999px;border:1px solid var(--hair);display:inline-flex;gap:7px;align-items:center;color:var(--ink);background:rgba(255,255,255,.03)}
+.chip i{width:7px;height:7px;border-radius:50%;background:var(--c,var(--accent));box-shadow:0 0 10px var(--c,var(--accent))}
+.chip span{color:var(--faint);letter-spacing:.04em}
+.controls{display:flex;align-items:center;gap:10px}
+.pips{display:flex;gap:5px;list-style:none;margin:0;padding:0;flex:1;min-width:0}
+.pips li{flex:1;min-width:0}
+.pips button{width:100%;appearance:none;border:1px solid var(--hair);background:rgba(255,255,255,.02);color:var(--faint);border-radius:8px;padding:6px 2px 5px;cursor:pointer;display:grid;gap:3px;justify-items:center;transition:all .35s}
+.pips button b{font:600 13px/1 var(--f-display)}
+.pips button span{font:500 9px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.pips button.done{color:var(--muted);border-color:var(--hair-strong)}
+.pips button[aria-current="step"]{color:var(--accent-ink);background:var(--accent);border-color:transparent}
+.btn{appearance:none;border:1px solid var(--hair-strong);background:transparent;color:var(--ink);height:44px;padding:0 16px;border-radius:10px;font:600 12px/1 var(--f-display);letter-spacing:.16em;text-transform:uppercase;cursor:pointer;transition:all .25s;flex:none}
+.btn:hover:not(:disabled){border-color:var(--accent);color:var(--accent)}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:transparent;box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 10px 30px -10px var(--accent)}
+.btn.primary:hover:not(:disabled){color:var(--accent-ink);filter:brightness(1.08)}
+.btn:disabled{opacity:.3;cursor:default}
+
+.dossier{position:fixed;z-index:5;right:max(16px,env(safe-area-inset-right,0px));top:50%;width:min(348px,calc(100vw - 32px));max-height:min(76vh,640px);overflow:auto;
+  background:var(--glass-strong);border:1px solid var(--hair-strong);border-radius:var(--r);backdrop-filter:blur(20px) saturate(1.3);-webkit-backdrop-filter:blur(20px) saturate(1.3);
+  padding:18px 18px 20px;transform:translate(calc(100% + 60px),-50%);opacity:0;transition:transform .55s cubic-bezier(.2,.8,.2,1),opacity .4s;box-shadow:0 30px 80px -30px rgba(0,0,0,.8)}
+.dossier.open{transform:translate(0,-50%);opacity:1}
+.dossier header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.dossier .tag{margin:0;font:500 10.5px/1.3 var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+.dossier .close{appearance:none;border:1px solid var(--hair);background:transparent;color:var(--muted);width:32px;height:32px;border-radius:8px;cursor:pointer;font:400 18px/1 var(--f-mono);flex:none}
+.dossier .close:hover{color:var(--ink);border-color:var(--hair-strong)}
+.glyph-row{display:flex;align-items:center;gap:16px;margin:12px 0 14px}
+.glyph{width:76px;height:76px;flex:none;display:grid;place-items:center;border-radius:10px;border:1px solid var(--hair-strong);font:600 44px/1 var(--f-display);background:radial-gradient(circle at 50% 35%,rgba(255,255,255,.08),transparent 70%);text-shadow:0 0 22px var(--accent)}
+.coord{display:grid;gap:4px;min-width:0}
+.coord b{font:500 15px/1.2 var(--f-mono);letter-spacing:.06em}
+.coord span{font:400 12px/1.3 var(--f-mono);color:var(--faint)}
+.roles{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.roles li{border-top:1px solid var(--hair);padding-top:9px;display:grid;gap:2px}
+.roles .role{font:500 10.5px/1.2 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);display:flex;gap:7px;align-items:center}
+.roles .role i{width:7px;height:7px;border-radius:50%;background:var(--c);box-shadow:0 0 8px var(--c)}
+.roles b{font:600 17px/1.2 var(--f-display);letter-spacing:.12em}
+.roles em{font:italic 400 13px/1.35 var(--f-body);color:var(--faint)}
+.tarot{margin-top:14px;padding:13px 14px;border-radius:10px;border:1px solid var(--hair);background:rgba(255,255,255,.03);display:grid;gap:3px}
+.tarot .num{font:500 10.5px/1 var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+.tarot b{font:600 18px/1.2 var(--f-display);letter-spacing:.05em}
+.tarot em{font:500 12px/1.3 var(--f-mono);color:var(--muted)}
+.tarot p{margin:4px 0 0;font:italic 400 14px/1.4 var(--f-body);color:var(--muted)}
+
+.tip{position:fixed;z-index:6;left:0;top:0;pointer-events:none;font:500 11.5px/1 var(--f-mono);letter-spacing:.08em;padding:6px 8px;border-radius:6px;background:var(--glass-strong);border:1px solid var(--hair);color:var(--ink);opacity:0;transition:opacity .15s;white-space:nowrap}
+.tip.show{opacity:1}
+.tip b{font-family:var(--f-display);font-size:13px;margin-right:6px;color:var(--accent)}
+
+.fail{position:fixed;inset:0;z-index:10;display:grid;place-items:center;background:var(--void);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.fail div{max-width:44ch;text-align:center;color:var(--muted)}
+.fail h2{font:600 22px/1.2 var(--f-display);color:var(--ink);margin:0 0 8px}
+
+
+/* ---------- About: the explainer sheet ---------- */
+.about{position:fixed;inset:0;z-index:20;display:flex;justify-content:flex-start}
+.about-backdrop{position:absolute;inset:0;background:rgba(3,3,4,.62);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);animation:fade .4s ease both}
+.about-sheet{position:relative;width:min(680px,100%);height:100%;overflow-y:auto;overscroll-behavior:contain;background:var(--glass-strong);border-right:1px solid var(--hair-strong);
+  backdrop-filter:blur(22px) saturate(1.2);-webkit-backdrop-filter:blur(22px) saturate(1.2);animation:slide .5s cubic-bezier(.2,.8,.2,1) both;
+  padding-block:calc(22px + env(safe-area-inset-top,0px)) calc(40px + env(safe-area-inset-bottom,0px));
+  padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px))}
+@keyframes fade{from{opacity:0}}
+@keyframes slide{from{transform:translateX(-40px);opacity:0}}
+.about-inner{max-width:60ch;display:grid;gap:26px}
+.about-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+.about .kicker{margin:0 0 6px;font:500 11px/1.2 var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+.about h2{margin:0;font:600 clamp(26px,4vw,34px)/1.08 var(--f-display);letter-spacing:.04em;text-wrap:balance}
+.about h3{margin:0 0 8px;font:600 15px/1.25 var(--f-display);letter-spacing:.12em;text-transform:uppercase;color:var(--ink)}
+.about p{margin:0 0 10px;font:400 16.5px/1.62 var(--f-body);color:#d9d2c2}
+.about p:last-child{margin-bottom:0}
+.about .lead{font-size:19px;line-height:1.55;color:var(--ink)}
+.about em{color:var(--ink)}
+.about .enoch{font:500 14px/1 var(--f-mono);letter-spacing:.1em;color:var(--accent);white-space:nowrap}
+.about section{border-top:1px solid var(--hair);padding-top:20px}
+.about blockquote{margin:12px 0;padding:2px 0 2px 16px;border-left:2px solid var(--accent);font:italic 400 18px/1.5 var(--f-body);color:var(--ink)}
+.about blockquote cite{display:block;margin-top:4px;font:normal 500 11px/1.3 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.about figure{margin:6px 0 0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:18px;align-items:center}
+.about figure svg{width:180px;max-width:100%;height:auto;display:block}
+.about figcaption{display:grid;gap:9px;font:400 13.5px/1.4 var(--f-body);color:var(--muted)}
+.about figcaption span{display:grid;grid-template-columns:14px minmax(0,1fr);gap:9px;align-items:start}
+.about figcaption i{width:12px;height:12px;border-radius:2px;margin-top:3px;background:var(--c)}
+.ranks{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:0}
+.ranks li{display:grid;grid-template-columns:110px minmax(0,1fr);gap:14px;padding:12px 0;border-top:1px solid var(--hair)}
+.ranks li:first-child{border-top:0;padding-top:4px}
+.ranks b{font:600 13px/1.3 var(--f-display);letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+.ranks p{margin:0;font-size:15.5px}
+.walk{margin:12px 0 0;padding:14px 16px;border-radius:10px;border:1px solid var(--hair);background:rgba(255,255,255,.03);display:grid;gap:8px}
+.walk div{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;font:400 15px/1.45 var(--f-body);color:var(--muted)}
+.walk code{font:500 15px/1 var(--f-mono);letter-spacing:.22em;color:var(--ink)}
+.stagelist{margin:8px 0 0;padding:0;list-style:none;display:grid;gap:9px;counter-reset:st}
+.stagelist li{display:grid;grid-template-columns:34px minmax(0,1fr);gap:12px;font:400 15.5px/1.5 var(--f-body);color:#d9d2c2}
+.stagelist li::before{content:counter(st,upper-roman);counter-increment:st;font:600 13px/1.6 var(--f-display);color:var(--accent);text-align:right}
+.stagelist li:first-child::before{content:"0"}
+.stagelist li:first-child{counter-increment:none}
+.about .src{font:400 13.5px/1.5 var(--f-body);color:var(--muted)}
+.about-foot{display:flex;gap:10px;flex-wrap:wrap;padding-top:6px}
+
+/* ---------- Share studio ---------- */
+.icon-btn.share{color:var(--accent-ink);background:var(--accent);border-color:transparent;box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 8px 24px -10px var(--accent)}
+.icon-btn.share:hover{color:var(--accent-ink);filter:brightness(1.08)}
+.studio{position:fixed;inset:0;z-index:25;display:flex;justify-content:center;align-items:stretch}
+.studio-backdrop{position:absolute;inset:0;background:rgba(3,3,4,.7);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);animation:fade .35s ease both}
+.studio-sheet{position:relative;width:min(1200px,100%);margin-block:calc(18px + env(safe-area-inset-top,0px)) calc(18px + env(safe-area-inset-bottom,0px));
+  margin-inline:max(16px,env(safe-area-inset-left,0px)) max(16px,env(safe-area-inset-right,0px));
+  background:var(--glass-strong);border:1px solid var(--hair-strong);border-radius:18px;backdrop-filter:blur(24px) saturate(1.2);-webkit-backdrop-filter:blur(24px) saturate(1.2);
+  display:grid;grid-template-rows:auto minmax(0,1fr);overflow:hidden;animation:rise .45s cubic-bezier(.2,.8,.2,1) both;box-shadow:0 40px 120px -40px rgba(0,0,0,.9)}
+@keyframes rise{from{transform:translateY(24px);opacity:0}}
+.studio-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:18px 22px 16px;border-bottom:1px solid var(--hair)}
+.studio-head .kicker{margin:0 0 5px;font:500 11px/1.2 var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+.studio-head h2{margin:0;font:600 clamp(22px,3vw,28px)/1.1 var(--f-display);letter-spacing:.04em}
+.studio-head p{margin:6px 0 0;color:var(--muted);font-size:14.5px;max-width:62ch}
+.xbtn{appearance:none;border:1px solid var(--hair);background:transparent;color:var(--muted);width:36px;height:36px;border-radius:9px;cursor:pointer;font:400 20px/1 var(--f-mono);flex:none}
+.xbtn:hover{color:var(--ink);border-color:var(--hair-strong)}
+.studio-grid{display:grid;grid-template-columns:minmax(260px,340px) minmax(0,1fr);min-height:0}
+.kb{border-right:1px solid var(--hair);display:grid;grid-template-rows:auto minmax(0,1fr);min-height:0}
+.kb-tools{padding:14px 16px 10px;display:grid;gap:10px;border-bottom:1px solid var(--hair)}
+.kb-tools label{font:500 10.5px/1 var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
+.input,.studio textarea{width:100%;box-sizing:border-box;background:rgba(255,255,255,.04);border:1px solid var(--hair);border-radius:9px;color:var(--ink);font:400 15px/1.45 var(--f-body);padding:9px 11px;outline:none;transition:border-color .2s}
+.input:focus,.studio textarea:focus{border-color:var(--accent)}
+.input.mono{font:400 13px/1.3 var(--f-mono)}
+.seg{display:flex;flex-wrap:wrap;gap:4px}
+.seg button{appearance:none;border:1px solid var(--hair);background:transparent;color:var(--muted);border-radius:999px;padding:6px 11px;font:500 11.5px/1 var(--f-mono);letter-spacing:.06em;cursor:pointer;transition:all .2s}
+.seg button:hover{color:var(--ink);border-color:var(--hair-strong)}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:transparent}
+.seg button[hidden]{display:none}
+.kb-list{list-style:none;margin:0;padding:8px 10px 14px;overflow-y:auto;display:grid;gap:4px;align-content:start}
+.kb-list button{appearance:none;width:100%;text-align:left;background:transparent;border:1px solid transparent;border-radius:10px;padding:10px 11px;color:var(--ink);cursor:pointer;display:grid;gap:5px;transition:background .2s,border-color .2s}
+.kb-list button:hover{background:rgba(255,255,255,.04)}
+.kb-list button[aria-pressed="true"]{background:rgba(255,255,255,.06);border-color:var(--accent)}
+.kb-list .cat{font:500 10px/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.kb-list .ex{font:400 14px/1.42 var(--f-body);color:#d9d2c2;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.kb-empty{padding:16px;color:var(--faint);font-style:italic}
+.work{overflow-y:auto;padding:16px 22px 26px;display:grid;gap:16px;align-content:start;min-width:0}
+.field{display:grid;gap:6px;min-width:0}
+.field > label,.field > .lab{font:500 10.5px/1 var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
+.field-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}
+.check{display:flex;gap:8px;align-items:center;font:400 14px/1.3 var(--f-body);color:var(--muted);cursor:pointer}
+.check input{accent-color:var(--accent);width:16px;height:16px}
+.tabbar{display:flex;gap:2px;border-bottom:1px solid var(--hair)}
+.tabbar button{appearance:none;background:transparent;border:0;border-bottom:2px solid transparent;color:var(--muted);padding:10px 14px;font:600 12.5px/1 var(--f-display);letter-spacing:.14em;text-transform:uppercase;cursor:pointer;margin-bottom:-1px}
+.tabbar button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+.pane{display:grid;gap:14px;min-width:0}
+.opts{display:grid;gap:10px}
+.opt{display:grid;grid-template-columns:96px minmax(0,1fr);gap:12px;align-items:center}
+.opt > span{font:500 10.5px/1.2 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.counter{font:500 12px/1 var(--f-mono);color:var(--muted);font-variant-numeric:tabular-nums}
+.counter.over{color:#ff7a6a}
+.actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.btn.sm{height:38px;padding:0 13px;font-size:11px;letter-spacing:.12em;display:inline-flex;align-items:center;gap:7px;text-decoration:none}
+.btn.sm svg{width:14px;height:14px}
+.hintline{margin:0;font:italic 400 13.5px/1.4 var(--f-body);color:var(--faint)}
+.imgwrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(220px,300px);gap:18px;align-items:start}
+.preview{border-radius:12px;border:1px solid var(--hair);background:repeating-conic-gradient(rgba(255,255,255,.03) 0 25%,transparent 0 50%) 0 0/18px 18px;display:grid;place-items:center;padding:12px;min-height:220px}
+.preview img{max-width:100%;max-height:min(62vh,640px);height:auto;border-radius:6px;display:block;box-shadow:0 20px 50px -20px rgba(0,0,0,.9)}
+.toast{position:fixed;z-index:40;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);opacity:0;pointer-events:none;
+  background:var(--ink);color:var(--void);font:500 13px/1.2 var(--f-mono);letter-spacing:.04em;padding:10px 14px;border-radius:10px;transition:opacity .25s,transform .25s;max-width:calc(100vw - 32px)}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.dactions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+@media (max-width:860px){
+  .studio-sheet{margin:0;border-radius:0;border:0}
+  .studio-grid{grid-template-columns:1fr;grid-template-rows:auto minmax(0,1fr);overflow-y:auto}
+  .kb{border-right:0;border-bottom:1px solid var(--hair)}
+  .kb-list{max-height:34vh}
+  .work{overflow:visible;padding:16px}
+  .imgwrap{grid-template-columns:1fr}
+  .field-row{grid-template-columns:1fr}
+  .opt{grid-template-columns:1fr;gap:6px}
+}
+@media (max-width:760px){
+  .about figure{grid-template-columns:1fr}
+  .ranks li{grid-template-columns:1fr;gap:4px}
+  .about p{font-size:16px}
+  .switcher button small{display:none}
+  .switcher button{padding:9px 9px}
+  .brand .hint{display:none}
+  .console{max-width:none;padding:12px 14px;gap:9px}
+  .console p.copy{font-size:13.5px}
+  .console p.note{display:none}
+  .console h2{font-size:18px}
+  .btn{padding:0 12px;letter-spacing:.1em}
+  .pips button span{display:none}
+  .dossier{left:max(16px,env(safe-area-inset-left,0px));right:max(16px,env(safe-area-inset-right,0px));width:auto;top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px));max-height:62vh;transform:translateY(calc(100% + 60px))}
+  .dossier.open{transform:translateY(0)}
+}
+@media (max-width:420px){
+  .switcher button{font-size:0;gap:0;padding:9px 10px}
+  .switcher button svg{width:17px;height:17px}
+  .icon-btn .lbl{display:none}
+}
+@media (max-height:560px){ .console p.copy{display:none} }
+@media (prefers-reduced-motion:reduce){ .dossier,.switcher button,.pips button,.toast{transition:none} .about-sheet,.about-backdrop,.studio-sheet,.studio-backdrop{animation:none} }
+</style>
+</head>
+<body>
+
+<canvas id="gl" aria-label="Three-dimensional Great Cross of the selected Enochian Watchtower. Drag to orbit, click a square for its dossier."></canvas>
+<div class="vignette"></div>
+
+<div class="hud">
+  <div class="top">
+    <div class="brand">
+      <p class="eyebrow" id="eyebrow">East · Watchtower of Air</p>
+      <h1 id="title">Tablet of Air</h1>
+      <p class="hint">Drag to orbit · scroll to zoom · click a square · keys 1–4, ← →</p>
+    </div>
+    <div class="top-controls">
+      <div class="switcher" role="group" aria-label="Choose a Watchtower">
+        <button type="button" data-el="air" aria-pressed="true" title="Air (1)">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M8 2 L14.5 13.5 H1.5 Z"/><path d="M3.6 9.6 H12.4"/></svg>Air<small>East</small></button>
+        <button type="button" data-el="water" aria-pressed="false" title="Water (2)">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M8 14 L1.5 2.5 H14.5 Z"/></svg>Water<small>West</small></button>
+        <button type="button" data-el="earth" aria-pressed="false" title="Earth (3)">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M8 14 L1.5 2.5 H14.5 Z"/><path d="M3.6 6.4 H12.4"/></svg>Earth<small>North</small></button>
+        <button type="button" data-el="fire" aria-pressed="false" title="Fire (4)">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M8 2 L14.5 13.5 H1.5 Z"/></svg>Fire<small>South</small></button>
+      </div>
+      <button type="button" class="icon-btn" id="aboutBtn" aria-haspopup="dialog" title="What is this?">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="8" cy="8" r="6.5"/><path d="M6.2 6.2a1.9 1.9 0 1 1 2.6 1.8c-.5.2-.8.6-.8 1.1v.5"/><circle cx="8" cy="11.6" r=".5" fill="currentColor"/></svg>
+        <span class="lbl">Learn</span>
+      </button>
+      <button type="button" class="icon-btn share" id="shareBtn" aria-haspopup="dialog" title="Make posts and quote images">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="3.5" r="2"/><circle cx="4" cy="8" r="2"/><circle cx="12" cy="12.5" r="2"/><path d="M5.8 7 10.2 4.5M5.8 9 10.2 11.5"/></svg>
+        <span class="lbl">Share</span>
+      </button>
+      <button type="button" class="icon-btn" id="sound" aria-pressed="false" title="Toggle the sound engine">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M2 6 H5 L9 3 V13 L5 10 H2 Z" fill="currentColor" fill-opacity=".15"/><path class="wave" d="M11 5.5 Q13 8 11 10.5"/><path class="wave" d="M12.6 3.8 Q16 8 12.6 12.2"/></svg>
+        <span class="lbl" id="soundLbl">Sound off</span>
+      </button>
+    </div>
+  </div>
+
+  <section class="console" aria-live="polite">
+    <div>
+      <p class="eyebrow" id="stageEyebrow">Stage 0 of 4</p>
+      <h2 id="stageTitle">The Sealed Matrix</h2>
+    </div>
+    <p class="copy" id="stageCopy"></p>
+    <div class="chips" id="chips"></div>
+    <p class="note" id="stageNote" hidden></p>
+    <div class="controls">
+      <button type="button" class="btn" id="prev">Reseal</button>
+      <ol class="pips" id="pips"></ol>
+      <button type="button" class="btn primary" id="next">Unveil</button>
+    </div>
+  </section>
+</div>
+
+<aside class="dossier" id="dossier" aria-live="polite" aria-hidden="true">
+  <header>
+    <p class="tag" id="dTag">Holy Name Letter</p>
+    <button type="button" class="close" id="dClose" aria-label="Close dossier">×</button>
+  </header>
+  <div class="glyph-row">
+    <div class="glyph" id="dGlyph">A</div>
+    <div class="coord">
+      <b id="dCoord">X 6 · Y 7</b>
+      <span id="dCoordSub">column 6, row 7 of 12 × 13</span>
+      <span id="dTablet">Tablet of Air</span>
+    </div>
+  </div>
+  <ul class="roles" id="dRoles"></ul>
+  <div class="tarot" id="dTarot"></div>
+  <div class="dactions">
+    <button type="button" class="btn primary sm" id="dShare">Share this square</button>
+    <button type="button" class="btn sm" id="dLink">Copy link</button>
+  </div>
+</aside>
+
+
+<div class="about" id="about" role="dialog" aria-modal="true" aria-labelledby="aboutTitle" hidden>
+  <div class="about-backdrop" id="aboutBackdrop"></div>
+  <article class="about-sheet" tabindex="-1">
+    <div class="about-inner">
+      <div class="about-head">
+        <div>
+          <p class="kicker">A guide to this page</p>
+          <h2 id="aboutTitle">What on earth is this?</h2>
+        </div>
+        <button type="button" class="close" id="aboutClose" aria-label="Close the guide" style="appearance:none;border:1px solid var(--hair);background:transparent;color:var(--muted);width:36px;height:36px;border-radius:9px;cursor:pointer;font:400 20px/1 var(--f-mono);flex:none">×</button>
+      </div>
+
+      <p class="lead">You are looking at the centre of a grid of letters that John Dee, scholar and adviser at the court of Elizabeth I, wrote down in the 1580s. Dee believed the grid was dictated by angels, seen in a crystal by his scryer Edward Kelley. Every letter belongs to the name of an angel or a name of God, and the layout of the grid tells you how to read those names out.</p>
+
+      <section>
+        <h3>Four tablets, four quarters of the world</h3>
+        <p>Dee's Great Table is one large table divided into four quarters, one for each compass direction. Each quarter is 12 squares wide and 13 deep, 156 squares in all, and a small Table of Union joins the four at their inner corners. Dee's text explains why the quarters exist: God set guardians over the world to keep the wicked spirits in check.</p>
+        <blockquote>“Let there be keepers, watchmen, and princes placed over her.”<cite>Dee's manuscript, as transcribed by Skinner &amp; Rankine</cite></blockquote>
+        <p>Those watchmen are why the quarters are now called the <em>Watchtowers</em>. Each is ruled by one great angel, a King, who stands guard over East, West, North or South. Later magicians of the Golden Dawn paired the quarters with the four elements, and the switcher at the top of the page follows their pairing: East with Air, West with Water, North with Earth, South with Fire.</p>
+      </section>
+
+      <section>
+        <h3>The cross inside each tablet</h3>
+        <p>Through the middle of each tablet runs a cross of 36 squares: the two middle columns (6 and 7) and the middle row (7). Dee calls it the black cross, because its letters were written in black between ruled lines. This is the part the page brings to life.</p>
+        <figure>
+          <svg id="aboutGrid" viewBox="0 0 244 264" role="img" aria-label="A 12 by 13 grid. The middle row and the two middle columns form a cross; the four corner blocks are the Lesser Angles."></svg>
+          <figcaption>
+            <span style="--c:#ffe0a0"><i></i>Row 7, the line of the Three Holy Names</span>
+            <span style="--c:var(--accent)"><i></i>Columns 6 and 7, where four of the Seniors are read</span>
+            <span style="--c:#ffcc44"><i></i>The two central squares, the seat of the King</span>
+            <span style="--c:var(--hair-strong)"><i></i>The four Lesser Angles, each 5 × 6 squares with a smaller cross and its own angels. They stay as faint wireframe here.</span>
+          </figcaption>
+        </figure>
+      </section>
+
+      <section>
+        <h3>What the cross spells out</h3>
+        <p>Dee describes a ladder of beings, and the cross holds the top of it.</p>
+        <ul class="ranks">
+          <li><b>Three Holy Names</b><p>Split row 7 into groups of three, four and five letters and you get three names of God, carried on banners before the King. In the East they are <span class="enoch">ORO IBAH AOZPI</span>. Four tablets give twelve names, which Dee says govern all creatures on Earth, seen and unseen.</p></li>
+          <li><b>The King</b><p>One mighty angel for each quarter, its overseer. The name is gathered from letters circling the centre of the cross: Dee builds <span class="enoch">BATAIVA</span> from the squares around the meeting point, adding an A or an H to make eight letters.</p></li>
+          <li><b>Six Seniors</b><p>Read outward from the centre along the six arms of the cross, seven letters each. Dee ties them to the 24 elders around the throne in the Book of Revelation: six per quarter, 24 in all. Their office, in his Latin, is knowledge of human affairs and judgement.</p></li>
+          <li><b>Below them</b><p>Each Lesser Angle has its own small cross, its own names of God, and sixteen angels with particular skills, such as healing, metals and stones, or transformation. Under those come countless lesser spirits, good and bad. That lower world is outside this page.</p></li>
+        </ul>
+        <div class="walk" aria-label="Worked example from the East tablet">
+          <div><code>H·A·B·I·O·R·O</code> Start on the H at column 7, row 7, and read left along the row.</div>
+          <div><code>A·A·O·X·A·I·F</code> Start on the A at column 6, row 7, and climb the column.</div>
+          <div><code>H·I·P·O·T·G·A</code> Start on the H again and descend column 7.</div>
+        </div>
+        <p style="margin-top:10px">The same rule produces all six Seniors in every tablet. Click any square on the cross to see which names pass through it.</p>
+      </section>
+
+      <section>
+        <h3>Where it comes from</h3>
+        <p>Dee (1527–1608) was a mathematician, astrologer and collector of one of the largest libraries in England. From 1569 he tried to contact angels, and from the early 1580s he worked with Kelley, keeping careful diaries of every session. The tables were refined over several years; the version Dee marked as corrected is dated 20 April 1587 and credited to the angel Raphael.</p>
+        <p>After Dee's death his most secret books lay hidden in the secret drawer of a cedar chest. A London family found them in 1662, their maid burned about half of the papers as kindling, and the rest survived the Great Fire of 1666. They reached the antiquary Elias Ashmole in 1672 and are now in the British Library. In the 1880s and 1890s the Hermetic Order of the Golden Dawn built its “Enochian” magic on a small part of this material, and most modern books follow their version.</p>
+      </section>
+
+      <section>
+        <h3>The five stages</h3>
+        <p>Press <em>Unveil</em> to take the cross apart one layer at a time.</p>
+        <ol class="stagelist">
+          <li>The Sealed Matrix. The 36 squares as they sit in the table, unlit.</li>
+          <li>The Three Holy Names rise from row 7.</li>
+          <li>The Six Seniors split away along their arms. The planet colours follow later practice, not Dee.</li>
+          <li>The King. The centre lifts and his name circles it.</li>
+          <li>The Tarot Harmony. The squares turn over to show tarot cards.</li>
+        </ol>
+      </section>
+
+      <section>
+        <h3>What is Dee and what is not</h3>
+        <p>The letters, the Holy Names, the Kings and the Seniors follow Dee's corrected table as transcribed by Skinner and Rankine. Dee often spelled names out for speaking, so his text has <em>Hetemorda</em> for <span class="enoch">HTMORDA</span> and <em>Lefarahpem</em> for <span class="enoch">LSRAHPM</span>; this page shows the bare letters as they stand in the table.</p>
+        <p>Dee never linked the tables to tarot or to planets. Those layers came from the Golden Dawn, and the card placement in stage IV is a study layout made for this page, not a traditional table.</p>
+        <p class="src">Source: Stephen Skinner and David Rankine, <em>The Practical Angel Magic of John Dee's Enochian Tables</em> (Golden Hoard Press, 2004), a transcription of <em>Tabula Bonorum Angelorum Invocationes</em> from British Library Sloane MS 307 and related manuscripts.</p>
+      </section>
+
+      <div class="about-foot">
+        <button type="button" class="btn primary" id="aboutGo">Explore the cross</button>
+        <button type="button" class="btn" id="aboutShare">Share what you learned</button>
+      </div>
+    </div>
+  </article>
+</div>
+
+
+<div class="studio" id="studio" role="dialog" aria-modal="true" aria-labelledby="studioTitle" hidden>
+  <div class="studio-backdrop" id="studioBackdrop"></div>
+  <section class="studio-sheet">
+    <header class="studio-head">
+      <div>
+        <p class="kicker">Share studio</p>
+        <h2 id="studioTitle">Pass the knowledge on</h2>
+        <p>Pick something from the knowledge base, then turn it into a post or a quote image. Everything you make links back to the cross.</p>
+      </div>
+      <button type="button" class="xbtn" id="studioClose" aria-label="Close the share studio">×</button>
+    </header>
+    <div class="studio-grid">
+      <aside class="kb" aria-label="Knowledge base">
+        <div class="kb-tools">
+          <label for="kbSearch">Knowledge base</label>
+          <input class="input" id="kbSearch" type="search" placeholder="Search: Kelley, Seniors, Water…" autocomplete="off">
+          <div class="seg" id="kbFilters">
+            <button type="button" data-f="all" aria-pressed="true">All</button>
+            <button type="button" data-f="history" aria-pressed="false">Dee &amp; history</button>
+            <button type="button" data-f="cross" aria-pressed="false">The cross</button>
+            <button type="button" data-f="tablets" aria-pressed="false">Tablets</button>
+            <button type="button" data-f="square" aria-pressed="false" hidden>Your square</button>
+          </div>
+        </div>
+        <ol class="kb-list" id="kbList"></ol>
+      </aside>
+
+      <div class="work">
+        <div class="field">
+          <label for="qText">Text</label>
+          <textarea id="qText" rows="4"></textarea>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="qAttr">Attribution</label>
+            <input class="input" id="qAttr" type="text">
+          </div>
+          <div class="field">
+            <label for="linkUrl">Link back to</label>
+            <input class="input mono" id="linkUrl" type="url" spellcheck="false">
+          </div>
+        </div>
+        <label class="check"><input type="checkbox" id="deepLink" checked> Open the link on this tablet or square</label>
+
+        <div class="tabbar" role="tablist">
+          <button type="button" role="tab" id="tabPost" aria-selected="true" aria-controls="panePost">Post</button>
+          <button type="button" role="tab" id="tabImage" aria-selected="false" aria-controls="paneImage">Quote image</button>
+        </div>
+
+        <div class="pane" id="panePost" role="tabpanel" aria-labelledby="tabPost">
+          <div class="opts">
+            <div class="opt"><span>Platform</span><div class="seg" id="segPlatform"></div></div>
+            <div class="opt"><span>Voice</span><div class="seg" id="segTone"></div></div>
+            <div class="opt"><span>Extras</span><div class="actions">
+              <label class="check"><input type="checkbox" id="optTags" checked> Hashtags</label>
+              <label class="check"><input type="checkbox" id="optCite"> Cite the source</label>
+            </div></div>
+          </div>
+          <div class="field">
+            <div class="lab" style="display:flex;justify-content:space-between;gap:10px"><label for="postOut">Your post</label><span class="counter" id="postCount"></span></div>
+            <textarea id="postOut" rows="7"></textarea>
+          </div>
+          <div class="actions">
+            <button type="button" class="btn primary sm" id="copyPost">Copy post</button>
+            <button type="button" class="btn sm" id="sharePost" hidden>Share…</button>
+            <a class="btn sm" id="openPlatform" href="#" target="_blank" rel="noopener noreferrer">Open X</a>
+          </div>
+          <p class="hintline" id="postHint"></p>
+        </div>
+
+        <div class="pane" id="paneImage" role="tabpanel" aria-labelledby="tabImage" hidden>
+          <div class="imgwrap">
+            <div class="preview"><img id="qPreview" alt=""></div>
+            <div class="opts">
+              <div class="field"><span class="lab" style="font:500 10.5px/1 var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--faint)">Format</span><div class="seg" id="segFormat"></div></div>
+              <div class="field"><span class="lab" style="font:500 10.5px/1 var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--faint)">Watchtower</span><div class="seg" id="segTheme"></div></div>
+              <div class="field"><span class="lab" style="font:500 10.5px/1 var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--faint)">Background</span><div class="seg" id="segBg"></div></div>
+              <div class="actions">
+                <button type="button" class="btn primary sm" id="saveImg" hidden>Save PNG</button>
+                <button type="button" class="btn sm" id="copyImg">Copy image</button>
+                <button type="button" class="btn sm" id="shareImg" hidden>Share…</button>
+              </div>
+              <p class="hintline">You can also right-click or long-press the preview to save it.</p>
+              <div class="field">
+                <div class="lab" style="display:flex;justify-content:space-between;gap:10px"><label for="altOut">Alt text</label><button type="button" class="btn sm" id="copyAlt" style="height:28px;padding:0 10px">Copy</button></div>
+                <textarea id="altOut" rows="4" readonly></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="tip" id="tip"></div>
+
+<div class="fail" id="fail" hidden>
+  <div><h2>The cross could not be raised</h2><p id="failMsg">This page needs WebGL and the Three.js library from unpkg.com. Check your connection or try a different browser, then reload.</p></div>
+</div>
+
+<script>
+  window.__crossReady = false;
+  setTimeout(function(){ if(!window.__crossReady){ document.getElementById('fail').hidden = false; } }, 12000);
+</script>
+<script type="importmap">
+{ "imports": {
+  "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+} }
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+
+/* ================================================================
+   DATA — the Great Cross of each Watchtower
+   Row 7 holds the Three Holy Names. Columns 6 & 7 hold the vertical
+   Seniors, each read outward from row 7. The two horizontal Seniors
+   are read from the centre along row 7 and are derived from the names.
+   ================================================================ */
+const TABLETS = {
+  air:   { label:'Air',   quarter:'East',  names:['ORO','IBAH','AOZPI'], king:'BATAIVAH',
+           vertical:{ up6:'AAOXAIF', up7:'HTMORDA', down6:'AVTOTAR', down7:'HIPOTGA' },
+           suit:'Swords', zodiacStart:6,
+           theme:{ stone:'#a07a22', glow:'#ffbf3d', carved:'#4a3d22', bg:'#0c0a06', particle:'#ffd98a', line:'#ffd27a',
+                   accent:'#f5c451', accentInk:'#1a1306', opacity:.78, rough:.24, metal:.18, card:['#241a09','#0c0904'] } },
+  water: { label:'Water', quarter:'West',  names:['MPH','ARSL','GAIOL'], king:'RAAGIOSL',
+           vertical:{ up6:'SAIINOV', up7:'LAOAXRP', down6:'SOAIXNT', down7:'LIGDISA' },
+           suit:'Cups', zodiacStart:3,
+           theme:{ stone:'#0f4a5a', glow:'#1fd8c8', carved:'#1a3a42', bg:'#03090d', particle:'#66f0ff', line:'#5fe6ff',
+                   accent:'#45d9d0', accentInk:'#03191a', opacity:.94, rough:.14, metal:.5, card:['#082129','#030b0e'] } },
+  earth: { label:'Earth', quarter:'North', names:['MOR','DIAL','HCTGA'], king:'ICZHIHAL',
+           vertical:{ up6:'ACZINOR', up7:'LZINOPO', down6:'AHMLICV', down7:'LIIANSA' },
+           suit:'Disks', zodiacStart:9,
+           theme:{ stone:'#2a2d2e', glow:'#86ab45', carved:'#2c3226', bg:'#060706', particle:'#b7cc8c', line:'#a9c77a',
+                   accent:'#a2c464', accentInk:'#121a06', opacity:1, rough:.62, metal:.12, card:['#161b10','#070906'] } },
+  fire:  { label:'Fire',  quarter:'South', names:['OIP','TEAA','PDOCE'], king:'EDLPRNAA',
+           vertical:{ up6:'ADOEOET', up7:'ALNDVOD', down6:'ANODOIN', down7:'ARINNAP' },
+           suit:'Wands', zodiacStart:0,
+           theme:{ stone:'#2c1c17', glow:'#ff4b1f', carved:'#3d241b', bg:'#0b0403', particle:'#ff8a4a', line:'#ff7a45',
+                   accent:'#ff6b3d', accentInk:'#1f0702', opacity:1, rough:.9, metal:.05, card:['#2a0d06','#0d0403'] } }
+};
+const ORDER = ['air','water','earth','fire'];
+
+const ARMS = {
+  left:  { planet:'Mars',    hex:'#ff4a36', where:'Row 7, read leftward from the centre' },
+  right: { planet:'Jupiter', hex:'#5d84ff', where:'Row 7, read rightward from the centre' },
+  up6:   { planet:'Saturn',  hex:'#a37dff', where:'Column 6, read upward from row 7' },
+  up7:   { planet:'Venus',   hex:'#3fe08f', where:'Column 7, read upward from row 7' },
+  down6: { planet:'Mercury', hex:'#ffa133', where:'Column 6, read downward from row 7' },
+  down7: { planet:'Moon',    hex:'#d3e4ff', where:'Column 7, read downward from row 7' }
+};
+// Dee's own reading order for the six Seniors
+const ARM_KEYS = ['left','up6','up7','right','down7','down6'];
+
+/* ---------- Tarot ---------- */
+const TRUMPS = [
+  ['0','The Fool','Air','the breath before any form'],
+  ['I','The Magician','Mercury','will made articulate'],
+  ['II','The High Priestess','Moon','the veiled current beneath appearances'],
+  ['III','The Empress','Venus','fertile harmony and the gate of love'],
+  ['IV','The Emperor','Aries','sovereign order imposed on chaos'],
+  ['V','The Hierophant','Taurus','the teaching that binds heaven to earth'],
+  ['VI','The Lovers','Gemini','union reached through discernment'],
+  ['VII','The Chariot','Cancer','the guarded vessel in motion'],
+  ['VIII','Strength','Leo','passion governed by grace'],
+  ['IX','The Hermit','Virgo','the inward lamp of solitude'],
+  ['X','Wheel of Fortune','Jupiter','the turning law of increase'],
+  ['XI','Justice','Libra','the balanced scale'],
+  ['XII','The Hanged Man','Water','surrender that yields insight'],
+  ['XIII','Death','Scorpio','transformation through ending'],
+  ['XIV','Temperance','Sagittarius','the alchemical blending of opposites'],
+  ['XV','The Devil','Capricorn','the binding force of matter'],
+  ['XVI','The Tower','Mars','the lightning that breaks false walls'],
+  ['XVII','The Star','Aquarius','hope poured out anew'],
+  ['XVIII','The Moon','Pisces','the threshold of dream'],
+  ['XIX','The Sun','Sun','radiant clarity at the centre'],
+  ['XX','Judgement','Fire','the call to rise'],
+  ['XXI','The Universe','Saturn','the completion of the Work']
+].map(([numeral,name,attr,key]) => ({ numeral, name, attr, key, kind:'Major Arcana' }));
+const ZODIAC = ['Aries','Taurus','Gemini','Cancer','Leo','Virgo','Libra','Scorpio','Sagittarius','Capricorn','Aquarius','Pisces'];
+const ZODIAC_TRUMP = [4,5,6,7,8,9,11,13,14,15,17,18];
+// vertical arms: planetary trump at each tip, remaining trumps near the heart; courts fill the rest
+const VERT_TRUMPS = { 'up6:1':16, 'up6:3':0, 'up6:6':21, 'up7:1':10, 'up7:3':12, 'up7:6':3,
+                      'down6:1':19, 'down6:3':20, 'down6:6':1, 'down7:6':2 };
+const SUITS = ['Wands','Cups','Swords','Disks'];
+const SUIT_EL = { Wands:'Fire', Cups:'Water', Swords:'Air', Disks:'Earth' };
+const RANK_EL = { King:'Fire', Queen:'Water', Prince:'Air', Princess:'Earth' };
+const RANK_KEY = { King:'force in its first swift rush', Queen:'force received, reflected and held',
+                   Prince:'force set in steady motion', Princess:'force made manifest and grounded' };
+
+function prepareTablet(tab){
+  tab.row = tab.names.join('');
+  tab.seniors = {
+    left:  tab.row.slice(0,7).split('').reverse().join(''),
+    right: tab.row.slice(5,12),
+    ...tab.vertical
+  };
+  // integrity check: every vertical senior must start on its column's row-7 letter
+  for (const k of ['up6','down6']) if (tab.vertical[k][0] !== tab.row[5]) console.warn(tab.label, k, 'does not root on column 6');
+  for (const k of ['up7','down7']) if (tab.vertical[k][0] !== tab.row[6]) console.warn(tab.label, k, 'does not root on column 7');
+  // court forces
+  const order = [tab.suit, ...SUITS.filter(s => s !== tab.suit)];
+  const el = SUIT_EL[tab.suit];
+  const courts = [
+    { numeral:'Root', name:`Ace of ${tab.suit}`, attr:`Root of ${el}`, key:`the root of the powers of ${el}, presiding over the whole tablet`, kind:'Root force' },
+    { numeral:'Court', name:`Princess of ${tab.suit}`, attr:`Earth of ${el}`, key:`${RANK_KEY.Princess}; the throne of the Ace`, kind:'Court force' }
+  ];
+  for (const s of order) for (const rank of ['King','Queen','Prince'])
+    courts.push({ numeral:'Court', name:`${rank} of ${s}`, attr:`${RANK_EL[rank]} of ${SUIT_EL[s]}`, key:RANK_KEY[rank], kind:'Court force' });
+  tab.courtMap = {};
+  let n = 0;
+  for (const arm of ['down7','up6','up7','down6']) for (let i=1;i<=6;i++){
+    const k = `${arm}:${i}`;
+    if (!(k in VERT_TRUMPS)) tab.courtMap[k] = courts[n++];
+  }
+}
+ORDER.forEach(k => prepareTablet(TABLETS[k]));
+
+/* ---------- Cells: 36 squares of the cross inside the 12 × 13 grid ---------- */
+const cells = [];
+for (let r=1;r<=13;r++) for (let c=1;c<=12;c++){
+  if (!(r===7 || c===6 || c===7)) continue;
+  const cell = { c, r, i:cells.length, bx:c-6.5, by:7-r };
+  cell.isRow = r===7;
+  cell.isCenter = cell.isRow && (c===6 || c===7);
+  if (cell.isRow){
+    cell.nameIdx = c<=3 ? 0 : c<=7 ? 1 : 2;
+    cell.nameLetter = c<=3 ? c : c<=7 ? c-3 : c-7;
+  }
+  if (!cell.isCenter){
+    if (cell.isRow){ if (c<6){ cell.arm='left'; cell.armIdx=7-c; } else { cell.arm='right'; cell.armIdx=c-6; } }
+    else if (r<7){ cell.arm = c===6 ? 'up6' : 'up7'; cell.armIdx = 7-r; }
+    else         { cell.arm = c===6 ? 'down6' : 'down7'; cell.armIdx = r-7; }
+  }
+  cells.push(cell);
+}
+function memberships(cell){
+  if (!cell.isCenter) return [{ arm:cell.arm, idx:cell.armIdx }];
+  return cell.c===6
+    ? [{arm:'right',idx:0},{arm:'left',idx:1},{arm:'up6',idx:0},{arm:'down6',idx:0}]
+    : [{arm:'left',idx:0},{arm:'right',idx:1},{arm:'up7',idx:0},{arm:'down7',idx:0}];
+}
+function letterFor(tab, cell){ return cell.isRow ? tab.row[cell.c-1] : tab.vertical[cell.arm][cell.armIdx]; }
+function tarotFor(tab, cell){
+  if (cell.isRow){
+    const s = (tab.zodiacStart + cell.c - 1) % 12;
+    return { ...TRUMPS[ZODIAC_TRUMP[s]], attr:ZODIAC[s] };
+  }
+  const k = `${cell.arm}:${cell.armIdx}`;
+  return k in VERT_TRUMPS ? TRUMPS[VERT_TRUMPS[k]] : tab.courtMap[k];
+}
+
+/* ================================================================
+   SOUND — procedural Web Audio, no files
+   ================================================================ */
+const PENT = [1, 9/8, 5/4, 3/2, 5/3, 2, 9/4, 5/2, 3, 10/3];
+const PROFILE = {
+  air:   { base:146.83, cutoff:2300, lfo:[0.35,0.015], lfo2:[0.12,700], bell:523.25, vol:0.085 },
+  water: { base:98.00,  cutoff:650,  lfo:[0.11,0.03],  lfo2:[0.06,260], bell:392.00, vol:0.12 },
+  earth: { base:55.00,  cutoff:340,  lfo:[0.5,0.07],   lfo2:[0.04,90],  bell:261.63, vol:0.16 },
+  fire:  { base:82.41,  cutoff:1300, lfo:[1.7,0.02],   lfo2:[0.3,500],  bell:440.00, vol:0.1 }
+};
+const Sound = {
+  ctx:null, on:false, el:'air', lastBell:0,
+  ensure(){
+    if (this.ctx) return true;
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return false;
+    const ctx = this.ctx = new AC();
+    const comp = ctx.createDynamicsCompressor(); comp.threshold.value = -16; comp.ratio.value = 3;
+    this.master = ctx.createGain(); this.master.gain.value = 0;
+    this.master.connect(comp); comp.connect(ctx.destination);
+    this.verb = ctx.createConvolver(); this.verb.buffer = this.impulse(3.2, 2.6);
+    const wet = ctx.createGain(); wet.gain.value = 0.55; this.verb.connect(wet); wet.connect(this.master);
+    // drone
+    this.lp = ctx.createBiquadFilter(); this.lp.type='lowpass'; this.lp.Q.value = 0.9;
+    this.dg = ctx.createGain(); this.dg.gain.value = 0.1;
+    this.lp.connect(this.dg); this.dg.connect(this.master);
+    const send = ctx.createGain(); send.gain.value = 0.25; this.dg.connect(send); send.connect(this.verb);
+    const mk = (type, mul, g, det) => { const o = ctx.createOscillator(); o.type = type; o.detune.value = det;
+      const gg = ctx.createGain(); gg.gain.value = g; o.connect(gg); gg.connect(this.lp); o.start(); return { o, mul }; };
+    this.osc = [ mk('sine',1,0.55,0), mk('triangle',1.5,0.14,3), mk('sine',2,0.2,-5), mk('sine',0.5,0.35,0) ];
+    this.lfo = ctx.createOscillator(); this.lfoAmt = ctx.createGain();
+    this.lfo.connect(this.lfoAmt); this.lfoAmt.connect(this.dg.gain); this.lfo.start();
+    this.lfo2 = ctx.createOscillator(); this.lfo2Amt = ctx.createGain();
+    this.lfo2.connect(this.lfo2Amt); this.lfo2Amt.connect(this.lp.frequency); this.lfo2.start();
+    const nb = this.noise = ctx.createBuffer(1, ctx.sampleRate, ctx.sampleRate);
+    const d = nb.getChannelData(0); for (let i=0;i<d.length;i++) d[i] = Math.random()*2-1;
+    this.setElement(this.el, true);
+    setInterval(() => this.tick(), 120);
+    return true;
+  },
+  impulse(dur, decay){
+    const ctx = this.ctx, len = Math.floor(ctx.sampleRate*dur), b = ctx.createBuffer(2, len, ctx.sampleRate);
+    for (let ch=0; ch<2; ch++){ const d = b.getChannelData(ch); for (let i=0;i<len;i++) d[i] = (Math.random()*2-1) * Math.pow(1-i/len, decay); }
+    return b;
+  },
+  toggle(){
+    if (!this.ensure()) return false;
+    if (this.ctx.state === 'suspended') this.ctx.resume();
+    this.on = !this.on;
+    this.master.gain.setTargetAtTime(this.on ? 0.85 : 0, this.ctx.currentTime, 0.35);
+    return this.on;
+  },
+  setElement(el, instant){
+    this.el = el;
+    if (!this.ctx) return;
+    const p = PROFILE[el], t = this.ctx.currentTime, tc = instant ? 0.01 : 0.7;
+    this.osc.forEach(({o,mul}) => o.frequency.setTargetAtTime(p.base*mul, t, tc));
+    this.lp.frequency.setTargetAtTime(p.cutoff, t, tc);
+    this.lfo.frequency.setTargetAtTime(p.lfo[0], t, tc);
+    this.lfoAmt.gain.setTargetAtTime(p.lfo[1], t, tc);
+    this.lfo2.frequency.setTargetAtTime(p.lfo2[0], t, tc);
+    this.lfo2Amt.gain.setTargetAtTime(p.lfo2[1], t, tc);
+    this.dg.gain.setTargetAtTime(p.vol, t, tc);
+  },
+  tone({ freq, type='sine', gain=0.05, attack=0.005, decay=1, when=0, glideTo=0, detune=0, verb=0.3, pan=0 }){
+    const ctx = this.ctx, t = ctx.currentTime + when;
+    const o = ctx.createOscillator(); o.type = type; o.detune.value = detune;
+    o.frequency.setValueAtTime(freq, t);
+    if (glideTo) o.frequency.exponentialRampToValueAtTime(glideTo, t + attack + decay*0.8);
+    const g = ctx.createGain(); g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(gain, t + attack);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + attack + decay);
+    let node = g;
+    if (pan && ctx.createStereoPanner){ const p = ctx.createStereoPanner(); p.pan.value = pan; g.connect(p); node = p; }
+    o.connect(g); node.connect(this.master);
+    if (verb){ const s = ctx.createGain(); s.gain.value = verb; node.connect(s); s.connect(this.verb); }
+    o.start(t); o.stop(t + attack + decay + 0.05);
+  },
+  crackle(){
+    const ctx = this.ctx, t = ctx.currentTime;
+    const src = ctx.createBufferSource(); src.buffer = this.noise;
+    const bp = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 1200 + Math.random()*4200; bp.Q.value = 2 + Math.random()*4;
+    const g = ctx.createGain(); const peak = 0.03 + Math.random()*0.08, dur = 0.015 + Math.random()*0.05;
+    g.gain.setValueAtTime(peak, t); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    src.connect(bp); bp.connect(g); g.connect(this.master);
+    src.start(t, Math.random()*0.9, dur + 0.02);
+  },
+  tick(){
+    if (!this.on) return;
+    const p = PROFILE[this.el], R = Math.random();
+    if (this.el === 'air' && R < 0.06){
+      const f = p.base * (3 + Math.floor(Math.random()*3));
+      this.tone({ freq:f, glideTo:f*2, gain:0.022, attack:0.05, decay:0.45, verb:0.6, pan:Math.random()*1.6-0.8 });
+      this.tone({ freq:f*1.5, glideTo:f*3, gain:0.01, attack:0.05, decay:0.4, verb:0.6, when:0.06 });
+    } else if (this.el === 'water' && R < 0.035){
+      const f = p.base * 4 * PENT[Math.floor(Math.random()*6)];
+      this.tone({ freq:f, type:'triangle', gain:0.04, attack:0.02, decay:2.8, verb:0.9, pan:Math.random()*1.4-0.7, detune:-8 });
+      this.tone({ freq:f*2.01, gain:0.01, attack:0.02, decay:1.6, verb:0.9 });
+    } else if (this.el === 'earth' && R < 0.075){
+      this.tone({ freq:p.base, gain:0.16, attack:0.03, decay:1.3, verb:0.15 });
+      this.tone({ freq:p.base*2, gain:0.05, attack:0.03, decay:0.8, verb:0.1 });
+    } else if (this.el === 'fire'){
+      if (R < 0.38) this.crackle();
+      if (R < 0.04) this.tone({ freq:p.base*(6+Math.floor(Math.random()*4)), gain:0.02, attack:0.002, decay:0.2, verb:0.4, pan:Math.random()*1.6-0.8 });
+    }
+  },
+  bell(n){
+    if (!this.on || !this.ctx) return;
+    const now = performance.now(); if (now - this.lastBell < 45) return; this.lastBell = now;
+    const f = PROFILE[this.el].bell * PENT[n % PENT.length];
+    this.tone({ freq:f, gain:0.05, attack:0.004, decay:1.1, verb:0.5 });
+    this.tone({ freq:f*2.76, gain:0.012, attack:0.004, decay:0.45, verb:0.5 });
+  },
+  chord(stage, up){
+    if (!this.on || !this.ctx) return;
+    const root = PROFILE[this.el].bell/2 * [1, 1.125, 1.25, 4/3, 1.5][stage];
+    const parts = up ? [1, 1.5, 2, 2.5, 3, 4] : [1, 1.2, 1.5];
+    parts.forEach((m, i) => {
+      this.tone({ freq:root*m, type:i%2 ? 'triangle' : 'sine', gain:(up ? 0.07 : 0.04)/(1+i*0.45),
+                  attack:0.03, decay:up ? 3.2 : 1.6, when:i*0.035, detune:(i%2 ? 4 : -4), verb:0.75, pan:(i/parts.length-0.5)*0.8 });
+    });
+  }
+};
+
+/* ================================================================
+   SCENE
+   ================================================================ */
+const canvas = document.getElementById('gl');
+let renderer;
+try {
+  renderer = new THREE.WebGLRenderer({ canvas, antialias:true, powerPreference:'high-performance' });
+} catch (e) {
+  document.getElementById('fail').hidden = false;
+  throw e;
+}
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const PR = Math.min(window.devicePixelRatio || 1, 2);
+renderer.setPixelRatio(PR);
+renderer.setSize(innerWidth, innerHeight, false);
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.05;
+
+const scene = new THREE.Scene();
+const bgCur = new THREE.Color(TABLETS.air.theme.bg);
+scene.background = bgCur;
+scene.fog = new THREE.FogExp2(bgCur.clone(), 0.012);
+
+const camera = new THREE.PerspectiveCamera(36, innerWidth/innerHeight, 0.1, 200);
+const viewDir = new THREE.Vector3(0, -0.26, 1).normalize();
+function fitDistance(){
+  const v = THREE.MathUtils.degToRad(camera.fov)/2;
+  return Math.max(9.4/Math.tan(v), 7.8/(Math.tan(v)*camera.aspect)) + 3;
+}
+camera.position.copy(viewDir).multiplyScalar(fitDistance());
+
+const controls = new OrbitControls(camera, canvas);
+controls.enableDamping = true; controls.dampingFactor = 0.06;
+controls.enablePan = false; controls.minDistance = 8; controls.maxDistance = Math.max(52, fitDistance()+12);
+controls.rotateSpeed = 0.7;
+
+const composer = new EffectComposer(renderer);
+composer.setPixelRatio(PR);
+composer.setSize(innerWidth, innerHeight);
+composer.addPass(new RenderPass(scene, camera));
+const bloom = new UnrealBloomPass(new THREE.Vector2(innerWidth, innerHeight), 0.8, 0.55, 0.62);
+composer.addPass(bloom);
+composer.addPass(new OutputPass());
+
+/* lights */
+scene.add(new THREE.AmbientLight(0xffffff, 0.35));
+const key = new THREE.DirectionalLight(0xfff2de, 1.7); key.position.set(-8, 11, 15); scene.add(key);
+const fill = new THREE.DirectionalLight(0x8fa6ff, 0.35); fill.position.set(10, -6, 6); scene.add(fill);
+const rim = new THREE.PointLight(0xffffff, 70, 0, 1.6); rim.position.set(3, 3, 2.4); scene.add(rim);
+const kingLight = new THREE.PointLight(0xffd25a, 0, 0, 1.7); kingLight.position.set(0, 0, 3.6); scene.add(kingLight);
+
+/* ---------- theme state ---------- */
+let currentKey = 'air';
+const T = (k) => TABLETS[k].theme;
+const themeCur = {
+  stone: new THREE.Color(T('air').stone), glow: new THREE.Color(T('air').glow), particle: new THREE.Color(T('air').particle),
+  line: new THREE.Color(T('air').line), opacity: T('air').opacity, rough: T('air').rough, metal: T('air').metal
+};
+const themeTgt = { stone:new THREE.Color(), glow:new THREE.Color(), particle:new THREE.Color(), line:new THREE.Color(), bg:new THREE.Color() };
+function setThemeTargets(k){
+  const t = T(k);
+  themeTgt.stone.set(t.stone); themeTgt.glow.set(t.glow); themeTgt.particle.set(t.particle); themeTgt.line.set(t.line); themeTgt.bg.set(t.bg);
+  themeTgt.opacity = t.opacity; themeTgt.rough = t.rough; themeTgt.metal = t.metal;
+}
+setThemeTargets('air');
+
+/* ---------- canvas textures ---------- */
+const FONT_D = '"Cinzel", Georgia, "Times New Roman", serif';
+const FONT_B = '"Spectral", Georgia, serif';
+const FONT_M = '"IBM Plex Mono", Menlo, monospace';
+const maxAniso = renderer.capabilities.getMaxAnisotropy();
+function makeTex(cv){ const t = new THREE.CanvasTexture(cv); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = Math.min(8, maxAniso); return t; }
+
+function drawLetter(cv, letter, cell){
+  const g = cv.getContext('2d'), S = cv.width;
+  g.clearRect(0,0,S,S);
+  g.strokeStyle = 'rgba(255,255,255,0.22)'; g.lineWidth = S*0.012;
+  g.strokeRect(S*0.07, S*0.07, S*0.86, S*0.86);
+  g.fillStyle = 'rgba(255,255,255,0.35)';
+  [[0.07,0.07],[0.93,0.07],[0.07,0.93],[0.93,0.93]].forEach(([x,y]) => { g.beginPath(); g.arc(S*x, S*y, S*0.018, 0, Math.PI*2); g.fill(); });
+  g.textAlign = 'center'; g.textBaseline = 'middle';
+  g.font = `600 ${S*0.6}px ${FONT_D}`;
+  g.fillStyle = 'rgba(0,0,0,0.8)'; g.fillText(letter, S/2 + S*0.014, S*0.535 + S*0.018);
+  g.fillStyle = '#ffffff'; g.fillText(letter, S/2, S*0.535);
+  g.font = `500 ${S*0.07}px ${FONT_M}`; g.textAlign = 'right'; g.textBaseline = 'alphabetic';
+  g.fillStyle = 'rgba(255,255,255,0.4)'; g.fillText(`${cell.c}·${cell.r}`, S*0.88, S*0.86);
+}
+function wrapLines(g, text, maxW){
+  const words = text.split(' '), lines = []; let line = '';
+  for (const w of words){ const test = line ? line + ' ' + w : w; if (g.measureText(test).width > maxW && line){ lines.push(line); line = w; } else line = test; }
+  if (line) lines.push(line); return lines;
+}
+function drawCard(cv, card, tab){
+  const g = cv.getContext('2d'), S = cv.width, th = tab.theme;
+  const grd = g.createLinearGradient(0,0,0,S); grd.addColorStop(0, th.card[0]); grd.addColorStop(1, th.card[1]);
+  g.fillStyle = grd; g.fillRect(0,0,S,S);
+  g.strokeStyle = th.accent; g.globalAlpha = 0.9; g.lineWidth = S*0.012; g.strokeRect(S*0.05,S*0.05,S*0.9,S*0.9);
+  g.globalAlpha = 0.4; g.lineWidth = S*0.005; g.strokeRect(S*0.08,S*0.08,S*0.84,S*0.84); g.globalAlpha = 1;
+  g.textAlign = 'center'; g.textBaseline = 'middle';
+  g.fillStyle = th.accent; g.font = `600 ${S*0.105}px ${FONT_D}`;
+  g.fillText(card.numeral, S/2, S*0.2);
+  g.fillStyle = '#f4ecdc'; g.font = `600 ${S*0.092}px ${FONT_D}`;
+  const lines = wrapLines(g, card.name.toUpperCase(), S*0.76).slice(0,3);
+  const lh = S*0.11, y0 = S*0.5 - (lines.length-1)*lh/2;
+  lines.forEach((l,i) => g.fillText(l, S/2, y0 + i*lh));
+  g.save(); g.translate(S/2, S*0.75); g.rotate(Math.PI/4); g.fillStyle = th.accent; g.fillRect(-S*0.012,-S*0.012,S*0.024,S*0.024); g.restore();
+  g.fillStyle = 'rgba(244,236,220,0.7)'; g.font = `italic 400 ${S*0.07}px ${FONT_B}`;
+  g.fillText(card.attr, S/2, S*0.84);
+}
+
+/* ---------- geometry ---------- */
+const TOP = 0.8, BOT = 0.96, H = 0.34;
+const bodyGeo = new THREE.CylinderGeometry(TOP/Math.SQRT2, BOT/Math.SQRT2, H, 4, 1);
+bodyGeo.rotateY(Math.PI/4); bodyGeo.rotateX(Math.PI/2);
+const topGeo = new THREE.PlaneGeometry(TOP*0.98, TOP*0.98);
+const backGeo = new THREE.PlaneGeometry(BOT*0.98, BOT*0.98);
+
+const crossGroup = new THREE.Group(); scene.add(crossGroup);
+const pickables = [];
+const WHITE = new THREE.Color(1,1,1);
+
+for (const cell of cells){
+  cell.letterCv = document.createElement('canvas'); cell.letterCv.width = cell.letterCv.height = 256;
+  cell.cardCv = document.createElement('canvas'); cell.cardCv.width = cell.cardCv.height = 384;
+  cell.letterTex = makeTex(cell.letterCv); cell.cardTex = makeTex(cell.cardCv);
+  const bodyMat = new THREE.MeshStandardMaterial({ color:themeCur.stone.clone(), roughness:themeCur.rough, metalness:themeCur.metal,
+    flatShading:true, transparent:true, opacity:themeCur.opacity, emissive:0x000000 });
+  const body = new THREE.Mesh(bodyGeo, bodyMat); body.renderOrder = 1;
+  const top = new THREE.Mesh(topGeo, new THREE.MeshBasicMaterial({ map:cell.letterTex, transparent:true, depthWrite:false, color:0x333333 }));
+  top.position.z = H/2 + 0.004; top.renderOrder = 2;
+  const back = new THREE.Mesh(backGeo, new THREE.MeshBasicMaterial({ map:cell.cardTex, color:0xdddddd }));
+  back.position.z = -H/2 - 0.004; back.rotation.x = Math.PI; back.renderOrder = 2;
+  const group = new THREE.Group(); group.add(body, top, back);
+  group.position.set(cell.bx, cell.by, 0);
+  crossGroup.add(group);
+  [body, top, back].forEach(m => { m.userData.cell = cell; pickables.push(m); });
+  Object.assign(cell, { group, body, top, back,
+    cur:{ x:cell.bx, y:cell.by, z:0, rx:0, rz:0 }, tgt:{ x:cell.bx, y:cell.by, z:0, rx:0, rz:0, king:false },
+    glow:new THREE.Color(0,0,0), glowT:new THREE.Color(0,0,0), let:new THREE.Color(0.2,0.2,0.2), letT:new THREE.Color(0.2,0.2,0.2),
+    hover:0, hoverT:0, pending:null, applyAt:0, morphStart:-1, swapped:true });
+}
+function paintCell(cell){
+  const tab = TABLETS[currentKey];
+  drawLetter(cell.letterCv, letterFor(tab, cell), cell); cell.letterTex.needsUpdate = true;
+  drawCard(cell.cardCv, tarotFor(tab, cell), tab); cell.cardTex.needsUpdate = true;
+}
+cells.forEach(paintCell);
+
+/* ---------- Lesser Angle voids: faint wireframe grids ---------- */
+const linePts = [];
+for (const [x0,x1] of [[-6,-1],[1,6]]) for (const [y0,y1] of [[0.5,6.5],[-6.5,-0.5]]){
+  for (let x=x0; x<=x1; x++) linePts.push(x,y0,0, x,y1,0);
+  for (let y=y0; y<=y1+1e-6; y+=1) linePts.push(x0,y,0, x1,y,0);
+}
+const lineGeo = new THREE.BufferGeometry(); lineGeo.setAttribute('position', new THREE.Float32BufferAttribute(linePts, 3));
+const lineMat = new THREE.LineBasicMaterial({ color:themeCur.line.clone(), transparent:true, opacity:0.16, depthWrite:false });
+const lines = new THREE.LineSegments(lineGeo, lineMat); lines.position.z = -H/2; scene.add(lines);
+let lineOpacityT = 0.16;
+
+/* ---------- King apparatus: crown ring, halo, beam ---------- */
+const kingGroup = new THREE.Group(); kingGroup.position.set(0,0,3.6); scene.add(kingGroup);
+const ringCv = document.createElement('canvas'); ringCv.width = ringCv.height = 1024;
+const ringTex = makeTex(ringCv);
+function drawRing(){
+  const g = ringCv.getContext('2d'), S = 1024, C = S/2, tab = TABLETS[currentKey];
+  g.clearRect(0,0,S,S);
+  g.strokeStyle = 'rgba(255,240,200,0.7)'; g.lineWidth = 3;
+  g.beginPath(); g.arc(C,C,C*0.745,0,Math.PI*2); g.stroke();
+  g.beginPath(); g.arc(C,C,C*0.985,0,Math.PI*2); g.stroke();
+  g.fillStyle = '#fff4d6'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.font = `700 92px ${FONT_D}`;
+  const L = tab.king.split('');
+  L.forEach((ch, i) => {
+    const a = -Math.PI/2 + i/L.length*Math.PI*2;
+    g.save(); g.translate(C + Math.cos(a)*C*0.865, C + Math.sin(a)*C*0.865); g.rotate(a + Math.PI/2); g.fillText(ch, 0, 4); g.restore();
+    const b = a + Math.PI/L.length;
+    g.beginPath(); g.arc(C + Math.cos(b)*C*0.865, C + Math.sin(b)*C*0.865, 6, 0, Math.PI*2); g.fill();
+  });
+  ringTex.needsUpdate = true;
+}
+drawRing();
+const ringMat = new THREE.MeshBasicMaterial({ map:ringTex, transparent:true, opacity:0, side:THREE.DoubleSide, depthWrite:false, blending:THREE.AdditiveBlending, color:new THREE.Color(1.6,1.35,0.9) });
+const ring = new THREE.Mesh(new THREE.RingGeometry(1.3, 1.75, 128, 1), ringMat); kingGroup.add(ring);
+const haloMat = new THREE.MeshBasicMaterial({ color:new THREE.Color(2.2,1.7,0.8), transparent:true, opacity:0, depthWrite:false, blending:THREE.AdditiveBlending });
+const halo = new THREE.Mesh(new THREE.TorusGeometry(1.95, 0.022, 10, 180), haloMat); kingGroup.add(halo);
+const beamCv = document.createElement('canvas'); beamCv.width = 4; beamCv.height = 256;
+{ const g = beamCv.getContext('2d'), grd = g.createLinearGradient(0,0,0,256);
+  grd.addColorStop(0,'rgba(255,255,255,0)'); grd.addColorStop(0.25,'rgba(255,255,255,0.9)'); grd.addColorStop(1,'rgba(255,255,255,0.05)');
+  g.fillStyle = grd; g.fillRect(0,0,4,256); }
+const beamGeo = new THREE.CylinderGeometry(0.62, 1.15, 3.6, 48, 1, true); beamGeo.rotateX(Math.PI/2); beamGeo.translate(0,0,1.8);
+const beamMat = new THREE.MeshBasicMaterial({ map:makeTex(beamCv), color:new THREE.Color(1,0.78,0.38), transparent:true, opacity:0, side:THREE.DoubleSide, depthWrite:false, blending:THREE.AdditiveBlending });
+const beam = new THREE.Mesh(beamGeo, beamMat); scene.add(beam);
+
+/* ---------- stardust ---------- */
+const N = 1500, pPos = new Float32Array(N*3), pVel = new Float32Array(N), pSeed = new Float32Array(N);
+for (let i=0;i<N;i++){ pPos[i*3] = (Math.random()-0.5)*56; pPos[i*3+1] = (Math.random()-0.5)*40; pPos[i*3+2] = -24 + Math.random()*34; pVel[i] = 0.08 + Math.random()*0.25; pSeed[i] = Math.random()*100; }
+const pGeo = new THREE.BufferGeometry(); pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
+const dotCv = document.createElement('canvas'); dotCv.width = dotCv.height = 64;
+{ const g = dotCv.getContext('2d'), grd = g.createRadialGradient(32,32,0,32,32,32); grd.addColorStop(0,'rgba(255,255,255,1)'); grd.addColorStop(0.3,'rgba(255,255,255,0.5)'); grd.addColorStop(1,'rgba(255,255,255,0)'); g.fillStyle = grd; g.fillRect(0,0,64,64); }
+const pMat = new THREE.PointsMaterial({ size:0.11, map:makeTex(dotCv), color:themeCur.particle.clone(), transparent:true, opacity:0.75, depthWrite:false, blending:THREE.AdditiveBlending, sizeAttenuation:true });
+scene.add(new THREE.Points(pGeo, pMat));
+
+/* ================================================================
+   STAGES
+   ================================================================ */
+const HOLY = new THREE.Color('#ffe0a0');
+const SUN = new THREE.Color('#ffcc44');
+const ARM_COLOR = Object.fromEntries(ARM_KEYS.map(k => [k, new THREE.Color(ARMS[k].hex)]));
+let stage = 0;
+
+function computeTarget(cell, s){
+  const th = T(currentKey);
+  const t = { x:cell.bx, y:cell.by, z:0, rx:0, king:false,
+              glow:new THREE.Color(th.glow).multiplyScalar(0.03), let:new THREE.Color(th.carved) };
+  if (s >= 1){
+    if (cell.isRow){
+      t.z = 0.9; t.x += cell.nameIdx===0 ? -0.32 : cell.nameIdx===2 ? 0.32 : 0;
+      t.glow.copy(HOLY).multiplyScalar(0.85); t.let.copy(HOLY).multiplyScalar(1.8);
+    } else { t.let.multiplyScalar(1.7); t.glow.copy(new THREE.Color(th.glow)).multiplyScalar(0.07); }
+  }
+  if (s >= 2){
+    t.x = cell.bx; t.y = cell.by;
+    if (cell.isCenter){ t.z = 0.95; t.glow.copy(SUN).multiplyScalar(0.9); t.let.copy(SUN).lerp(WHITE,0.5).multiplyScalar(1.9); }
+    else {
+      const a = cell.arm, col = ARM_COLOR[a];
+      if (a==='left') t.x -= 1.1; else if (a==='right') t.x += 1.1;
+      else { t.y += a.startsWith('up') ? 1.1 : -1.1; t.x += a.endsWith('6') ? -0.32 : 0.32; }
+      t.z = 0.6; t.glow.copy(col).multiplyScalar(0.55); t.let.copy(col).lerp(WHITE,0.45).multiplyScalar(1.55);
+    }
+  }
+  if (s >= 3){
+    if (cell.isCenter){ t.king = true; t.z = 3.6; t.glow.copy(SUN).multiplyScalar(1.35); }
+    else { t.glow.multiplyScalar(0.5); t.let.multiplyScalar(0.8); }
+  }
+  if (s >= 4) t.rx = Math.PI;
+  return t;
+}
+function delayFor(cell, s, forward){
+  if (!forward) return (Math.abs(cell.bx) + Math.abs(cell.by)) * 12;
+  switch (s){
+    case 1: return cell.isRow ? (cell.c-1)*60 : 0;
+    case 2: return (cell.isCenter ? 0 : cell.armIdx) * 85;
+    case 3: return cell.isCenter ? 0 : 120;
+    case 4: return (cell.r + cell.c) * 40;
+    default: return 0;
+  }
+}
+function applyStage(s, forward = true, extraDelay = 0){
+  const now = performance.now(), k = reduceMotion ? 0.25 : 1;
+  for (const cell of cells){ cell.pending = computeTarget(cell, s); cell.applyAt = now + extraDelay + delayFor(cell, s, forward)*k; }
+  lineOpacityT = s === 0 ? 0.16 : 0.08;
+}
+
+/* ================================================================
+   UI
+   ================================================================ */
+const $ = (id) => document.getElementById(id);
+const STAGES = [
+  { short:'Sealed',  title:'The Sealed Matrix' },
+  { short:'Names',   title:'The Three Holy Names' },
+  { short:'Seniors', title:'The Six Planetary Seniors' },
+  { short:'King',    title:'The Elemental King' },
+  { short:'Tarot',   title:'The Tarot Harmony' }
+];
+const pipsEl = $('pips');
+STAGES.forEach((st, i) => {
+  const li = document.createElement('li');
+  li.innerHTML = `<button type="button" id="pip${i}" title="${st.title}"><b>${['0','I','II','III','IV'][i]}</b><span>${st.short}</span></button>`;
+  li.firstChild.addEventListener('click', () => goStage(i));
+  pipsEl.appendChild(li);
+});
+const chip = (text, sub, color) => `<span class="chip"${color ? ` style="--c:${color}"` : ''}>${color ? '<i></i>' : ''}${text}${sub ? ` <span>${sub}</span>` : ''}</span>`;
+
+function renderStageUI(){
+  const tab = TABLETS[currentKey];
+  $('stageEyebrow').textContent = `Stage ${stage} of 4`;
+  $('stageTitle').textContent = STAGES[stage].title;
+  let copy = '', chips = '', note = '';
+  switch (stage){
+    case 0:
+      copy = `Thirty-six squares lie flush and unlit inside the 12 × 13 grid of the ${tab.label} tablet. The four Lesser Angles stay as empty wireframe.`;
+      chips = chip('36 squares','of 156') + chip('Row 7','line of spirit') + chip('Columns 6–7','the black cross');
+      break;
+    case 1:
+      copy = 'Row 7 rises. Its twelve letters divide into three secret names of God, of three, four and five letters.';
+      chips = tab.names.map((n,i) => chip(n, ['3','4','5'][i] + ' letters', '#ffe0a0')).join('');
+      break;
+    case 2:
+      copy = 'Read from the centre outward, each arm of the cross gives a Senior of seven letters. Six arms, six planets; the Sun is reserved for the King.';
+      chips = ARM_KEYS.map(k => chip(tab.seniors[k], ARMS[k].planet, ARMS[k].hex)).join('');
+      break;
+    case 3:
+      copy = `The heart of the cross ascends. Its two central squares carry the crown of ${tab.king}, the Elemental King, ruled by the Sun.`;
+      chips = chip(tab.king, 'Sun', '#ffcc44') + chip('8 letters','whirled from the centre');
+      break;
+    case 4:
+      copy = 'Each square turns to show its card: twelve zodiacal trumps along the line of spirit, ten more trumps and fourteen court forces down the columns.';
+      chips = chip('22','Major Arcana') + chip('14','court forces') + chip('156','squares in the tablet');
+      note = 'This placement is a study layout for contemplation, not a fixed traditional table.';
+      break;
+  }
+  $('stageCopy').textContent = copy;
+  $('chips').innerHTML = chips;
+  $('stageNote').hidden = !note; $('stageNote').textContent = note;
+  $('prev').disabled = stage === 0; $('next').disabled = stage === 4;
+  STAGES.forEach((_, i) => {
+    const b = $('pip'+i);
+    if (i === stage) b.setAttribute('aria-current','step'); else b.removeAttribute('aria-current');
+    b.classList.toggle('done', i < stage);
+  });
+}
+function goStage(s){
+  s = Math.max(0, Math.min(4, s));
+  if (s === stage) return;
+  const forward = s > stage;
+  stage = s; applyStage(stage, forward);
+  Sound.chord(stage, forward);
+  renderStageUI();
+}
+$('next').addEventListener('click', () => goStage(stage+1));
+$('prev').addEventListener('click', () => goStage(stage-1));
+
+function setTablet(k){
+  if (k === currentKey) return;
+  currentKey = k;
+  const tab = TABLETS[k], th = tab.theme;
+  document.querySelectorAll('.switcher button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.el === k)));
+  document.documentElement.style.setProperty('--accent', th.accent);
+  document.documentElement.style.setProperty('--accent-ink', th.accentInk);
+  $('eyebrow').textContent = `${tab.quarter} · Watchtower of ${tab.label}`;
+  $('title').textContent = `Tablet of ${tab.label}`;
+  setThemeTargets(k);
+  const now = performance.now();
+  for (const cell of cells){ cell.morphStart = now + (Math.abs(cell.bx) + Math.abs(cell.by)) * (reduceMotion ? 10 : 38); cell.swapped = false; }
+  applyStage(stage, true, 260);
+  drawRing();
+  Sound.setElement(k);
+  Sound.chord(Math.max(stage,1), true);
+  renderStageUI();
+  if (selected) renderDossier(selected);
+}
+document.querySelectorAll('.switcher button').forEach(b => b.addEventListener('click', () => setTablet(b.dataset.el)));
+
+$('sound').addEventListener('click', () => {
+  const on = Sound.toggle();
+  $('sound').setAttribute('aria-pressed', String(on));
+  $('soundLbl').textContent = on ? 'Sound on' : 'Sound off';
+});
+
+/* ---------- dossier ---------- */
+let selected = null;
+const dossier = $('dossier');
+function renderDossier(cell){
+  const tab = TABLETS[currentKey], L = letterFor(tab, cell), card = tarotFor(tab, cell);
+  $('dGlyph').textContent = L;
+  $('dCoord').textContent = `X ${cell.c} · Y ${cell.r}`;
+  $('dCoordSub').textContent = `column ${cell.c}, row ${cell.r} of the 12 × 13 grid`;
+  $('dTablet').textContent = `Tablet of ${tab.label} · ${tab.quarter}`;
+  $('dTag').textContent = cell.isCenter ? 'King Nexus' : cell.isRow ? `Holy Name Letter · Senior Vector: ${ARMS[cell.arm].planet}` : `Senior Vector: ${ARMS[cell.arm].planet}`;
+  let html = '';
+  if (cell.isCenter) html += `<li><span class="role" style="--c:#ffcc44"><i></i>King Nexus · Sun</span><b>${tab.king}</b><em>Central square of the Great Cross, where all six Seniors take root.</em></li>`;
+  if (cell.isRow){ const n = tab.names[cell.nameIdx]; html += `<li><span class="role" style="--c:#ffe0a0"><i></i>Holy Name · ${['First','Second','Third'][cell.nameIdx]}</span><b>${n}</b><em>Letter ${cell.nameLetter} of ${n.length} on the line of spirit.</em></li>`; }
+  for (const m of memberships(cell)){
+    const a = ARMS[m.arm];
+    html += `<li><span class="role" style="--c:${a.hex}"><i></i>Senior · ${a.planet}</span><b>${tab.seniors[m.arm]}</b><em>${m.idx===0 ? 'Root letter' : `Letter ${m.idx+1} of 7`}. ${a.where}.</em></li>`;
+  }
+  $('dRoles').innerHTML = html;
+  $('dTarot').innerHTML = `<span class="num">${card.kind}${card.numeral && card.kind==='Major Arcana' ? ' · ' + card.numeral : ''}</span><b>${card.name}</b><em>${card.attr}</em><p>${card.key[0].toUpperCase() + card.key.slice(1)}.</p>`;
+}
+function select(cell){
+  selected = cell; renderDossier(cell);
+  dossier.classList.add('open'); dossier.setAttribute('aria-hidden','false');
+}
+function closeDossier(){ selected = null; dossier.classList.remove('open'); dossier.setAttribute('aria-hidden','true'); }
+$('dClose').addEventListener('click', closeDossier);
+
+
+/* ---------- About guide ---------- */
+const about = $('about');
+(function drawGuideGrid(){
+  const svg = $('aboutGrid'), C = 20, O = 2; let out = '';
+  for (let r=1;r<=13;r++) for (let c=1;c<=12;c++){
+    const x = O + (c-1)*C, y = O + (r-1)*C;
+    const center = r===7 && (c===6||c===7), row = r===7, col = c===6||c===7;
+    const fill = center ? '#ffcc44' : row ? '#ffe0a0' : col ? 'var(--accent)' : 'none';
+    const op = center ? 1 : row ? .85 : col ? .7 : 1;
+    out += `<rect x="${x+1.5}" y="${y+1.5}" width="${C-3}" height="${C-3}" rx="2" fill="${fill}" fill-opacity="${op}" stroke="${fill==='none' ? 'var(--hair-strong)' : 'none'}" stroke-width="1"/>`;
+  }
+  svg.innerHTML = out;
+})();
+let aboutReturn = null;
+function openAbout(){
+  aboutReturn = document.activeElement;
+  about.hidden = false;
+  about.querySelector('.about-sheet').scrollTop = 0;
+  $('aboutClose').focus();
+}
+function closeAbout(){
+  about.hidden = true;
+  try { localStorage.setItem('gc-guide-seen','1'); } catch(e){}
+  if (aboutReturn && aboutReturn.focus) aboutReturn.focus();
+}
+$('aboutBtn').addEventListener('click', openAbout);
+$('aboutClose').addEventListener('click', closeAbout);
+$('aboutBackdrop').addEventListener('click', closeAbout);
+$('aboutGo').addEventListener('click', closeAbout);
+let seenGuide = false;
+try { seenGuide = localStorage.getItem('gc-guide-seen') === '1'; } catch(e){}
+if (!seenGuide) openAbout();
+
+addEventListener('keydown', (e) => {
+  if (!about.hidden){ if (e.key === 'Escape') closeAbout(); return; }
+  if (!$('studio').hidden){ if (e.key === 'Escape') closeStudio(); return; }
+  if (e.target.closest && e.target.closest('input,textarea')) return;
+  if (e.key === 'ArrowRight' || e.key === ' ' && e.target === document.body){ e.preventDefault(); goStage(stage+1); }
+  else if (e.key === 'ArrowLeft'){ goStage(stage-1); }
+  else if (e.key === 'Escape'){ closeDossier(); }
+  else if ('1234'.includes(e.key) && e.key.length === 1){ setTablet(ORDER[+e.key - 1]); }
+});
+
+/* ---------- pointer: hover, click, rim light ---------- */
+const raycaster = new THREE.Raycaster();
+const ndc = new THREE.Vector2(0.3, 0.3);
+const rimPlane = new THREE.Plane(new THREE.Vector3(0,0,1), -2.4);
+const rimTarget = new THREE.Vector3(3,3,2.4);
+const tip = $('tip');
+let hovered = null, downAt = null;
+
+function pick(){
+  raycaster.setFromCamera(ndc, camera);
+  const hit = raycaster.intersectObjects(pickables, false)[0];
+  return hit ? hit.object.userData.cell : null;
+}
+function setNdc(e){ ndc.set((e.clientX/innerWidth)*2-1, -(e.clientY/innerHeight)*2+1); }
+canvas.addEventListener('pointermove', (e) => {
+  setNdc(e);
+  raycaster.setFromCamera(ndc, camera);
+  raycaster.ray.intersectPlane(rimPlane, rimTarget);
+  if (e.pointerType !== 'mouse') return;
+  const c = pick();
+  if (c !== hovered){
+    hovered = c;
+    if (c){ Sound.bell(c.c + c.r*2); }
+    canvas.classList.toggle('pointing', !!c);
+  }
+  if (c){
+    tip.innerHTML = `<b>${letterFor(TABLETS[currentKey], c)}</b>${c.c}, ${c.r}`;
+    tip.style.transform = `translate(${e.clientX + 14}px, ${e.clientY + 14}px)`;
+    tip.classList.add('show');
+  } else tip.classList.remove('show');
+});
+canvas.addEventListener('pointerleave', () => { hovered = null; tip.classList.remove('show'); canvas.classList.remove('pointing'); });
+canvas.addEventListener('pointerdown', (e) => { downAt = { x:e.clientX, y:e.clientY, t:performance.now() }; });
+canvas.addEventListener('pointerup', (e) => {
+  if (!downAt) return;
+  const moved = Math.hypot(e.clientX - downAt.x, e.clientY - downAt.y), dt = performance.now() - downAt.t;
+  downAt = null;
+  if (moved > 7 || dt > 600) return;
+  setNdc(e);
+  const c = pick();
+  if (c){ select(c); if (Sound.on){ Sound.lastBell = 0; Sound.bell(c.c + c.r*2 + 2); } }
+});
+
+addEventListener('resize', () => {
+  camera.aspect = innerWidth/innerHeight; camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight, false); composer.setSize(innerWidth, innerHeight); bloom.setSize(innerWidth, innerHeight);
+  const fd = fitDistance(); controls.maxDistance = Math.max(52, fd+12);
+  camera.position.setLength(fd);
+});
+
+/* ================================================================
+   LOOP
+   ================================================================ */
+let last = performance.now(), kingAngle = 0;
+const tmp = new THREE.Color();
+function lerp(a,b,k){ return a + (b-a)*k; }
+
+function frame(now){
+  const dt = Math.min(0.05, (now - last)/1000); last = now;
+  const t = now/1000;
+  const k = 1 - Math.exp(-dt*5.5), kc = 1 - Math.exp(-dt*3.2);
+
+  // theme
+  bgCur.lerp(themeTgt.bg, kc); scene.fog.color.copy(bgCur);
+  themeCur.stone.lerp(themeTgt.stone, kc); themeCur.glow.lerp(themeTgt.glow, kc);
+  themeCur.particle.lerp(themeTgt.particle, kc); themeCur.line.lerp(themeTgt.line, kc);
+  themeCur.opacity = lerp(themeCur.opacity, themeTgt.opacity, kc);
+  themeCur.rough = lerp(themeCur.rough, themeTgt.rough, kc);
+  themeCur.metal = lerp(themeCur.metal, themeTgt.metal, kc);
+  pMat.color.copy(themeCur.particle); lineMat.color.copy(themeCur.line);
+  lineMat.opacity = lerp(lineMat.opacity, lineOpacityT, kc);
+  rim.color.copy(themeCur.glow);
+  rim.position.lerp(rimTarget, 1 - Math.exp(-dt*6));
+
+  if (stage >= 3) kingAngle += dt * (reduceMotion ? 0.15 : 0.45);
+
+  for (const cell of cells){
+    if (cell.pending && now >= cell.applyAt){
+      const p = cell.pending; cell.pending = null;
+      cell.tgt.x = p.x; cell.tgt.y = p.y; cell.tgt.z = p.z; cell.tgt.rx = p.rx; cell.tgt.king = p.king;
+      cell.glowT.copy(p.glow); cell.letT.copy(p.let);
+    }
+    const tg = cell.tgt, cu = cell.cur;
+    if (tg.king){
+      const sgn = cell.c === 7 ? 1 : -1;
+      tg.x = sgn*0.5*Math.cos(kingAngle); tg.y = sgn*0.5*Math.sin(kingAngle); tg.rz = kingAngle;
+    } else {
+      tg.rz = 0;
+      if (Math.abs(cu.rz) > Math.PI) cu.rz = Math.atan2(Math.sin(cu.rz), Math.cos(cu.rz));
+    }
+    // tablet morph
+    let mz = 0, ms = 1;
+    if (cell.morphStart >= 0){
+      const p = (now - cell.morphStart)/560;
+      if (p >= 0){
+        if (p >= 0.5 && !cell.swapped){ paintCell(cell); cell.swapped = true; }
+        if (p >= 1) cell.morphStart = -1;
+        else { const s = Math.sin(Math.PI*p); mz = -0.75*s; ms = 1 - 0.38*s; }
+      }
+    }
+    cu.x = lerp(cu.x, tg.x, k); cu.y = lerp(cu.y, tg.y, k); cu.z = lerp(cu.z, tg.z, k*0.9);
+    cu.rx = lerp(cu.rx, tg.rx, k*0.75); cu.rz = lerp(cu.rz, tg.rz, k);
+    cell.glow.lerp(cell.glowT, k); cell.let.lerp(cell.letT, k);
+    cell.hoverT = (cell === hovered ? 1 : 0); cell.hover = lerp(cell.hover, cell.hoverT, 1 - Math.exp(-dt*12));
+    const sel = cell === selected ? 0.55 + 0.45*Math.sin(t*3.2) : 0;
+
+    cell.group.position.set(cu.x, cu.y, cu.z + mz + cell.hover*0.2 + (cell === selected ? 0.12 : 0));
+    cell.group.rotation.set(cu.rx, 0, cu.rz);
+    cell.group.scale.setScalar(ms * (1 + cell.hover*0.06));
+
+    const bm = cell.body.material;
+    bm.color.copy(themeCur.stone); bm.opacity = themeCur.opacity; bm.roughness = themeCur.rough; bm.metalness = themeCur.metal;
+    tmp.copy(themeCur.glow).multiplyScalar(cell.hover*0.55 + sel*0.5);
+    bm.emissive.copy(cell.glow).add(tmp);
+    cell.top.material.color.copy(cell.let).multiplyScalar(1 + cell.hover*0.8 + sel*0.6);
+    cell.back.material.color.setScalar(0.85 + cell.hover*0.35 + sel*0.25);
+  }
+
+  // King apparatus
+  const kOn = stage >= 3 ? 1 : 0;
+  ringMat.opacity = lerp(ringMat.opacity, kOn*0.95, kc);
+  haloMat.opacity = lerp(haloMat.opacity, kOn, kc);
+  beamMat.opacity = lerp(beamMat.opacity, kOn*0.32, kc);
+  kingLight.intensity = lerp(kingLight.intensity, kOn*40, kc);
+  ring.rotation.z = -kingAngle*0.6;
+  halo.scale.setScalar(1 + 0.03*Math.sin(t*2));
+  kingGroup.visible = ringMat.opacity > 0.005; beam.visible = beamMat.opacity > 0.005;
+
+  // stardust drift
+  for (let i=0;i<N;i++){
+    pPos[i*3+1] += pVel[i]*dt;
+    pPos[i*3] += Math.sin(t*0.3 + pSeed[i])*0.004;
+    if (pPos[i*3+1] > 20) pPos[i*3+1] = -20;
+  }
+  pGeo.attributes.position.needsUpdate = true;
+
+  controls.update();
+  composer.render();
+  requestAnimationFrame(frame);
+}
+
+
+/* ================================================================
+   SHARE STUDIO — knowledge base, post builder, quote images
+   ================================================================ */
+const DEFAULT_LINK = 'https://somersetnomad.github.io/great-cross/';
+const CITE_BOOK = "Skinner & Rankine, The Practical Angel Magic of John Dee's Enochian Tables (2004)";
+const CITE_TABLE = "Letters from John Dee's corrected Great Table (1587), via Skinner & Rankine (2004)";
+const joinList = (a) => a.length < 2 ? a.join('') : a.slice(0,-1).join(', ') + ' and ' + a[a.length-1];
+
+const KB_STATIC = [
+  { id:'dee', cat:'history', kind:'fact', hl:'all', attr:'John Dee, 1527–1608', cite:CITE_BOOK,
+    text:"John Dee was a mathematician, astrologer and adviser at the court of Elizabeth I. He spent decades trying to speak with angels." },
+  { id:'kelley', cat:'history', kind:'fact', hl:'all', attr:'John Dee & Edward Kelley', cite:CITE_BOOK,
+    text:"Dee began seeking contact with angels in 1569. From the early 1580s he worked with the scryer Edward Kelley and kept a diary of every session." },
+  { id:'raphael', cat:'history', kind:'fact', hl:'all', attr:'The corrected Great Table, 1587', cite:CITE_BOOK,
+    text:"The version of the Great Table that Dee marked as corrected is dated 20 April 1587. He credited the corrections to the angel Raphael." },
+  { id:'chest', cat:'history', kind:'fact', hl:'all', attr:"The story of Dee's chest", cite:CITE_BOOK,
+    text:"After Dee died, his most secret books lay in the hidden drawer of a cedar chest. The family who found them in 1662 lost about half the papers when their maid used them to light fires." },
+  { id:'fire', cat:'history', kind:'fact', hl:'all', attr:"Dee's manuscripts", cite:CITE_BOOK,
+    text:"Dee's surviving angel books came through the Great Fire of London in 1666, reached the antiquary Elias Ashmole in 1672, and are now in the British Library." },
+  { id:'gd', cat:'history', kind:'fact', hl:'all', attr:'The Golden Dawn and Dee', cite:CITE_BOOK,
+    text:"The Golden Dawn built its Enochian magic on only a small part of Dee's material. Most modern books follow their version, not Dee's corrected table." },
+  { id:'motto', cat:'history', kind:'quote', hl:'all', attr:"John Dee's motto", cite:CITE_BOOK,
+    text:"Veritas praevalebit. Truth prevails." },
+  { id:'watchmen', cat:'cross', kind:'quote', hl:'king', attr:'John Dee, Tabula Bonorum Angelorum Invocationes', cite:CITE_BOOK,
+    text:"Let there be keepers, watchmen, and princes placed over her." },
+  { id:'four', cat:'cross', kind:'fact', hl:'all', attr:"Dee's Great Table", cite:CITE_BOOK,
+    text:"Dee's Great Table is one table split into four quarters, East, West, North and South, joined at the centre by a small Table of Union." },
+  { id:'156', cat:'cross', kind:'fact', hl:'all', attr:'The Watchtowers', cite:CITE_BOOK,
+    text:"Each Watchtower is 12 squares wide and 13 deep. Every one of its 156 letters belongs to the name of an angel or a name of God." },
+  { id:'black', cat:'cross', kind:'fact', hl:'all', attr:'The Great Cross', cite:CITE_BOOK,
+    text:"Through every Watchtower runs a cross of 36 squares: the two middle columns and the middle row. Dee called it the black cross." },
+  { id:'twelve', cat:'cross', kind:'fact', hl:'row', attr:'The Holy Names', cite:CITE_BOOK,
+    text:"Split the middle row of a Watchtower into 3, 4 and 5 letters and you get three names of God. Across the four tablets that makes twelve, carried on banners before the Kings." },
+  { id:'elders', cat:'cross', kind:'fact', hl:'seniors', attr:'The 24 Seniors', cite:CITE_BOOK,
+    text:"Dee tied the 24 Seniors of the tablets to the 24 elders around the throne in the Book of Revelation: six for each quarter of the world." },
+  { id:'office', cat:'cross', kind:'fact', hl:'seniors', attr:'The office of the Seniors', cite:CITE_BOOK,
+    text:"In Dee's account, the Seniors are charged with knowledge of human affairs and with judgement." },
+  { id:'angles', cat:'cross', kind:'fact', hl:'all', attr:'The Lesser Angles', cite:CITE_BOOK,
+    text:"Each Lesser Angle has its own small cross and sixteen angels with particular skills, from healing to the powers of metals and stones to transformation." },
+  { id:'tarot', cat:'cross', kind:'fact', hl:'all', attr:'Dee and the tarot', cite:CITE_BOOK,
+    text:"Dee never linked his tables to tarot or the planets. Those correspondences came three centuries later, from the Golden Dawn." }
+];
+function kbTablet(k){
+  const tab = TABLETS[k], w = `the ${tab.quarter} Watchtower`;
+  const sen = ARM_KEYS.map(a => tab.seniors[a]);
+  return [
+    { id:`${k}-names`, cat:'tablets', tablet:k, kind:'fact', hl:'row', attr:`Watchtower of ${tab.label} · ${tab.quarter}`, cite:CITE_TABLE,
+      text:`The three Holy Names of ${w}, the tablet of ${tab.label}, are ${joinList(tab.names)}. They are read along the middle row of its Great Cross.` },
+    { id:`${k}-king`, cat:'tablets', tablet:k, kind:'fact', hl:'king', attr:`Watchtower of ${tab.label} · ${tab.quarter}`, cite:CITE_TABLE,
+      text:`${tab.king} is the King of ${w}, the great angel set as watchman over that quarter of the world. His name is gathered from the letters circling the centre of the cross.` },
+    { id:`${k}-seniors`, cat:'tablets', tablet:k, kind:'fact', hl:'seniors', attr:`Watchtower of ${tab.label} · ${tab.quarter}`, cite:CITE_TABLE,
+      text:`The six Seniors of ${w} are ${joinList(sen)}. Each is read outward from the centre of the Great Cross, seven letters along one arm.` }
+  ];
+}
+function kbSquare(k, cell){
+  const tab = TABLETS[k], L = letterFor(tab, cell), roles = [];
+  if (cell.isCenter) roles.push(`part of the seat of the King, ${tab.king}`);
+  if (cell.isRow) roles.push(`letter ${cell.nameLetter} of the Holy Name ${tab.names[cell.nameIdx]}`);
+  const ms = memberships(cell);
+  const roots = ms.filter(m => m.idx === 0).map(m => tab.seniors[m.arm]);
+  const inner = ms.filter(m => m.idx > 0).map(m => `letter ${m.idx+1} of the Senior ${tab.seniors[m.arm]}`);
+  if (roots.length) roles.push(`the first letter of the Seniors ${joinList(roots)}`);
+  roles.push(...inner);
+  return { id:`sq-${k}-${cell.c}-${cell.r}`, cat:'square', tablet:k, cell, kind:'fact', hl:'cell', attr:`Watchtower of ${tab.label} · square ${cell.c}, ${cell.r}`, cite:CITE_TABLE,
+    text:`Column ${cell.c}, row ${cell.r} of the ${tab.label} Watchtower holds the letter ${L}. It is ${joinList(roles)}.` };
+}
+
+/* ---------- state ---------- */
+const store = {
+  get(k, d){ try { const v = localStorage.getItem('gc-'+k); return v === null ? d : JSON.parse(v); } catch(e){ return d; } },
+  set(k, v){ try { localStorage.setItem('gc-'+k, JSON.stringify(v)); } catch(e){} }
+};
+const S = {
+  item:null, filter:'all', query:'',
+  platform: store.get('platform','x'), tone: store.get('tone','fact'),
+  tags: store.get('tags', true), cite: store.get('cite', false),
+  link: (() => { const l = store.get('link', DEFAULT_LINK); return /claude\.ai\/artifact/.test(l) ? DEFAULT_LINK : l; })(), deep: store.get('deep', true),
+  format: store.get('format','square'), theme:'air', bg:'stars', tab:'post'
+};
+let snapshot = null, squareItem = null;
+
+const PLATFORMS = {
+  x:        { label:'X', limit:280, urlLen:23, intent:(t)=>`https://twitter.com/intent/tweet?text=${encodeURIComponent(t)}`, tags:['JohnDee','Enochian'] },
+  bluesky:  { label:'Bluesky', limit:300, intent:(t)=>`https://bsky.app/intent/compose?text=${encodeURIComponent(t)}`, tags:['JohnDee','Enochian'] },
+  threads:  { label:'Threads', limit:500, intent:(t)=>`https://www.threads.net/intent/post?text=${encodeURIComponent(t)}`, tags:['JohnDee'] },
+  linkedin: { label:'LinkedIn', limit:3000, intent:(t,u)=>`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(u)}`, textless:true, tags:['History','JohnDee','EsotericHistory'] },
+  facebook: { label:'Facebook', limit:0, intent:(t,u)=>`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(u)}`, textless:true, tags:['JohnDee','Enochian'] },
+  instagram:{ label:'Instagram', limit:2200, intent:null, tags:['JohnDee','Enochian','Watchtowers','EsotericHistory','AngelMagic','Elizabethan','HermeticTradition','SacredGeometry'] }
+};
+const TONES = {
+  fact:   { label:'Plain fact', lead:'', cta:'Explore the Great Cross in 3D:' },
+  dyk:    { label:'Did you know?', lead:'Did you know? ', cta:'See it for yourself:' },
+  invite: { label:'Invitation', lead:'', cta:"Turn the cross in 3D and unveil its names, one layer at a time:" }
+};
+
+function shareUrl(){
+  let u = (S.link || DEFAULT_LINK).trim();
+  if (!/^https?:\/\//i.test(u)) u = 'https://' + u;
+  u = u.replace(/#.*$/, '');
+  if (S.deep && S.item){
+    if (S.item.cell) u += `#${S.item.tablet}-c${S.item.cell.c}r${S.item.cell.r}`;
+    else if (S.item.tablet) u += `#${S.item.tablet}`;
+    else if (S.theme) u += `#${S.theme}`;
+  }
+  return u;
+}
+const displayUrl = (u) => u.replace(/^https?:\/\//,'').replace(/^www\./,'');
+
+function quoteBody(){
+  const text = $('qText').value.trim(), attr = $('qAttr').value.trim();
+  if (!S.item || S.item.kind !== 'quote') return text;
+  return `“${text}”${attr ? ` — ${attr}` : ''}`;
+}
+function buildPost(){
+  const P = PLATFORMS[S.platform], T = TONES[S.tone], url = shareUrl();
+  let body = T.lead + quoteBody();
+  const parts = [body];
+  if (S.cite && S.item) parts.push(`Source: ${S.item.cite}.`);
+  if (S.platform === 'instagram') parts.push('Explore the cross in 3D: link in bio.');
+  else parts.push(`${T.cta} ${url}`);
+  if (S.tags) parts.push(P.tags.map(t => '#'+t).join(' '));
+  return parts.join('\n\n');
+}
+function countFor(text){
+  const P = PLATFORMS[S.platform];
+  let t = text;
+  if (P.urlLen) t = t.replace(/https?:\/\/\S+/g, 'x'.repeat(P.urlLen));
+  return Array.from(t).length;
+}
+function updateCount(){
+  const P = PLATFORMS[S.platform], n = countFor($('postOut').value), el = $('postCount');
+  el.textContent = P.limit ? `${n} / ${P.limit}` : `${n} characters`;
+  el.classList.toggle('over', !!P.limit && n > P.limit);
+  updateOpenLink();
+}
+function updateOpenLink(){
+  const P = PLATFORMS[S.platform], a = $('openPlatform'), text = $('postOut').value;
+  if (!P.intent){ a.hidden = true; }
+  else { a.hidden = false; a.href = P.intent(text, shareUrl()); a.textContent = `Open ${P.label}`; }
+  const hint = {
+    x:'Opens X with the post filled in. Links count as 23 characters there.',
+    bluesky:'Opens Bluesky with the post filled in.',
+    threads:'Opens Threads with the post filled in.',
+    linkedin:'LinkedIn only takes the link. The post text is copied when you open it, so paste it in.',
+    facebook:'Facebook only takes the link. The post text is copied when you open it, so paste it in.',
+    instagram:'Instagram has no share link. Copy this caption and post it with a quote image from the next tab.'
+  }[S.platform];
+  $('postHint').textContent = hint;
+}
+function regenPost(){ $('postOut').value = buildPost(); updateCount(); }
+
+/* ---------- knowledge base list ---------- */
+function allItems(){
+  const items = [...KB_STATIC];
+  [currentKey, ...ORDER.filter(k => k !== currentKey)].forEach(k => items.push(...kbTablet(k)));
+  if (squareItem) items.unshift(squareItem);
+  return items;
+}
+const CAT_LABEL = { history:'Dee & history', cross:'The cross', tablets:'Tablets', square:'Your square' };
+function renderKB(){
+  const q = S.query.toLowerCase();
+  const items = allItems().filter(it => (S.filter === 'all' || it.cat === S.filter) && (!q || (it.text + ' ' + it.attr).toLowerCase().includes(q)));
+  const list = $('kbList');
+  list.innerHTML = '';
+  if (!items.length){ list.innerHTML = '<li class="kb-empty">Nothing matches that search.</li>'; return; }
+  for (const it of items){
+    const li = document.createElement('li'), b = document.createElement('button');
+    b.type = 'button'; b.setAttribute('aria-pressed', String(S.item && S.item.id === it.id));
+    const cat = document.createElement('span'); cat.className = 'cat';
+    cat.textContent = CAT_LABEL[it.cat] + (it.tablet && it.cat !== 'square' ? ` · ${TABLETS[it.tablet].label}` : '') + (it.kind === 'quote' ? ' · quote' : '');
+    const ex = document.createElement('span'); ex.className = 'ex'; ex.textContent = it.text;
+    b.append(cat, ex);
+    b.addEventListener('click', () => chooseItem(it));
+    li.appendChild(b); list.appendChild(li);
+  }
+}
+function chooseItem(it){
+  S.item = it;
+  $('qText').value = it.text; $('qAttr').value = it.attr;
+  if (it.tablet) S.theme = it.tablet;
+  renderSegs(); renderKB(); regenPost(); scheduleImage();
+}
+$('kbSearch').addEventListener('input', (e) => { S.query = e.target.value; renderKB(); });
+document.querySelectorAll('#kbFilters button').forEach(b => b.addEventListener('click', () => {
+  S.filter = b.dataset.f;
+  document.querySelectorAll('#kbFilters button').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+  renderKB();
+}));
+
+/* ---------- segmented controls ---------- */
+const FORMATS = {
+  square:   { w:1080, h:1080, label:'Square' },
+  portrait: { w:1080, h:1350, label:'Portrait' },
+  wide:     { w:1200, h:630,  label:'Link card' },
+  story:    { w:1080, h:1920, label:'Story' }
+};
+function seg(id, entries, cur, onPick){
+  const el = $(id); el.innerHTML = '';
+  for (const [k, label] of entries){
+    const b = document.createElement('button'); b.type = 'button'; b.textContent = label;
+    b.setAttribute('aria-pressed', String(k === cur));
+    b.addEventListener('click', () => onPick(k));
+    el.appendChild(b);
+  }
+}
+function renderSegs(){
+  seg('segPlatform', Object.entries(PLATFORMS).map(([k,v]) => [k, v.label]), S.platform, (k) => { S.platform = k; store.set('platform',k); renderSegs(); regenPost(); });
+  seg('segTone', Object.entries(TONES).map(([k,v]) => [k, v.label]), S.tone, (k) => { S.tone = k; store.set('tone',k); renderSegs(); regenPost(); });
+  seg('segFormat', Object.entries(FORMATS).map(([k,v]) => [k, v.label]), S.format, (k) => { S.format = k; store.set('format',k); renderSegs(); scheduleImage(); });
+  seg('segTheme', ORDER.map(k => [k, TABLETS[k].label]), S.theme, (k) => { S.theme = k; renderSegs(); regenPost(); scheduleImage(); });
+  seg('segBg', [['stars','Starfield'],['view','Your 3D view']], S.bg, (k) => { S.bg = k; if (k === 'view') captureView(); renderSegs(); scheduleImage(); });
+}
+$('qText').addEventListener('input', () => { regenPost(); scheduleImage(); });
+$('qAttr').addEventListener('input', () => { regenPost(); scheduleImage(); });
+$('linkUrl').addEventListener('input', (e) => { S.link = e.target.value; store.set('link', S.link); regenPost(); scheduleImage(); });
+$('deepLink').addEventListener('change', (e) => { S.deep = e.target.checked; store.set('deep', S.deep); regenPost(); scheduleImage(); });
+$('optTags').addEventListener('change', (e) => { S.tags = e.target.checked; store.set('tags', S.tags); regenPost(); });
+$('optCite').addEventListener('change', (e) => { S.cite = e.target.checked; store.set('cite', S.cite); regenPost(); });
+$('postOut').addEventListener('input', updateCount);
+
+function setTab(t){
+  S.tab = t;
+  $('tabPost').setAttribute('aria-selected', String(t === 'post'));
+  $('tabImage').setAttribute('aria-selected', String(t === 'image'));
+  $('panePost').hidden = t !== 'post'; $('paneImage').hidden = t !== 'image';
+  if (t === 'image') scheduleImage(0);
+}
+$('tabPost').addEventListener('click', () => setTab('post'));
+$('tabImage').addEventListener('click', () => setTab('image'));
+
+/* ---------- clipboard & toast ---------- */
+let toastTimer = 0;
+function toast(msg){ const t = $('toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('show'), 2600); }
+function copyText(text, okMsg, field){
+  const fallback = () => { if (field){ field.focus(); field.select(); } toast('Copying is blocked here. The text is selected, so press Ctrl+C or ⌘C.'); };
+  try { navigator.clipboard.writeText(text).then(() => toast(okMsg), fallback); } catch(e){ fallback(); }
+}
+$('copyPost').addEventListener('click', () => copyText($('postOut').value, 'Post copied', $('postOut')));
+$('openPlatform').addEventListener('click', () => {
+  if (PLATFORMS[S.platform].textless){ try { navigator.clipboard.writeText($('postOut').value).then(() => toast('Post text copied. Paste it into the share box.'), () => {}); } catch(e){} }
+});
+$('copyAlt').addEventListener('click', () => copyText($('altOut').value, 'Alt text copied', $('altOut')));
+
+/* ---------- quote image renderer ---------- */
+const qCanvas = document.createElement('canvas');
+function rng(seed){ return () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+function fitText(g, text, family, maxW, maxH, maxSize, minSize, lh){
+  for (let size = maxSize; size >= minSize; size -= 2){
+    g.font = family.replace('{s}', size);
+    const lines = [];
+    for (const para of text.split('\n')){
+      let line = '';
+      for (const w of para.split(/\s+/).filter(Boolean)){
+        const test = line ? line + ' ' + w : w;
+        if (g.measureText(test).width > maxW && line){ lines.push(line); line = w; } else line = test;
+      }
+      lines.push(line);
+    }
+    if (lines.length * size * lh <= maxH || size - 2 < minSize) return { size, lines };
+  }
+}
+function hlColor(cell, hl, it){
+  if (hl === 'row') return cell.isRow ? '#ffe0a0' : null;
+  if (hl === 'king') return cell.isCenter ? '#ffcc44' : null;
+  if (hl === 'seniors') return cell.isCenter ? '#ffcc44' : ARMS[cell.arm].hex;
+  if (hl === 'cell' && it && it.cell) return cell === it.cell ? '#ffcc44' : null;
+  return 'accent';
+}
+function drawDiagram(g, x, y, cs, tab, th, hl, it){
+  g.save();
+  g.strokeStyle = th.line; g.globalAlpha = 0.16; g.lineWidth = Math.max(1, cs*0.04);
+  for (let r=1;r<=13;r++) for (let c=1;c<=12;c++){
+    if (r===7 || c===6 || c===7) continue;
+    g.strokeRect(x + (c-1)*cs + cs*0.08, y + (r-1)*cs + cs*0.08, cs*0.84, cs*0.84);
+  }
+  g.globalAlpha = 1;
+  for (const cell of cells){
+    const cx = x + (cell.c-1)*cs, cy = y + (cell.r-1)*cs, col = hlColor(cell, hl, it);
+    const L = letterFor(tab, cell);
+    g.shadowBlur = 0;
+    if (col && col !== 'accent'){ g.fillStyle = col; g.shadowColor = col; g.shadowBlur = cs*0.5; }
+    else if (col === 'accent'){ g.fillStyle = th.accent; g.globalAlpha = 0.32; }
+    else { g.fillStyle = th.stone; g.globalAlpha = 0.6; }
+    g.fillRect(cx + cs*0.06, cy + cs*0.06, cs*0.88, cs*0.88);
+    g.globalAlpha = 1; g.shadowBlur = 0;
+    g.fillStyle = (col && col !== 'accent') ? '#14100a' : 'rgba(255,248,232,0.9)';
+    g.font = `600 ${Math.round(cs*0.56)}px ${FONT_D}`; g.textAlign = 'center'; g.textBaseline = 'middle';
+    g.fillText(L, cx + cs/2, cy + cs*0.54);
+  }
+  g.restore();
+}
+function trimToWidth(g, text, w){
+  if (g.measureText(text).width <= w) return text;
+  while (text.length > 4 && g.measureText(text + '…').width > w) text = text.slice(0, -1);
+  return text + '…';
+}
+function renderQuote(){
+  const F = FORMATS[S.format], W = F.w, Hh = F.h, tab = TABLETS[S.theme], th = tab.theme, it = S.item;
+  qCanvas.width = W; qCanvas.height = Hh;
+  const g = qCanvas.getContext('2d');
+  // background
+  if (S.bg === 'view' && snapshot){
+    const sw = snapshot.width, sh = snapshot.height, sc = Math.max(W/sw, Hh/sh);
+    g.drawImage(snapshot, (W - sw*sc)/2, (Hh - sh*sc)/2, sw*sc, sh*sc);
+    const ov = g.createLinearGradient(0,0,0,Hh); ov.addColorStop(0,'rgba(0,0,0,0.55)'); ov.addColorStop(0.5,'rgba(0,0,0,0.7)'); ov.addColorStop(1,'rgba(0,0,0,0.85)');
+    g.fillStyle = ov; g.fillRect(0,0,W,Hh);
+  } else {
+    const bg = g.createLinearGradient(0,0,W,Hh); bg.addColorStop(0, th.card[0]); bg.addColorStop(1, th.card[1]);
+    g.fillStyle = bg; g.fillRect(0,0,W,Hh);
+    const rg = g.createRadialGradient(W*0.78, Hh*0.18, 0, W*0.78, Hh*0.18, Math.max(W,Hh)*0.7);
+    rg.addColorStop(0, th.glow + '40'); rg.addColorStop(1, th.glow + '00');
+    g.fillStyle = rg; g.fillRect(0,0,W,Hh);
+    const R = rng(ORDER.indexOf(S.theme)*97 + W + Hh);
+    for (let i=0;i<Math.round(W*Hh/2600);i++){
+      g.globalAlpha = 0.15 + R()*0.6; g.fillStyle = R() < 0.25 ? th.particle : '#ffffff';
+      g.beginPath(); g.arc(R()*W, R()*Hh, R()*1.6 + 0.3, 0, Math.PI*2); g.fill();
+    }
+    g.globalAlpha = 1;
+  }
+  const P = Math.round(Math.min(W,Hh) * 0.075);
+  // frame
+  g.strokeStyle = th.accent; g.globalAlpha = 0.55; g.lineWidth = 2; g.strokeRect(P*0.45, P*0.45, W - P*0.9, Hh - P*0.9); g.globalAlpha = 1;
+
+  // layout
+  const wide = S.format === 'wide', story = S.format === 'story';
+  const footH = Math.round(P * 1.15);
+  let cs, dx, dy, tx, ty, tw, th2;
+  if (wide){
+    cs = Math.floor((Hh - P*2) / 13); dx = P; dy = Math.round((Hh - cs*13)/2);
+    tx = dx + cs*12 + P; tw = W - tx - P; ty = P; th2 = Hh - P*2 - footH;
+  } else if (story){
+    cs = Math.floor((W - P*4) / 12 * 0.78); dx = Math.round((W - cs*12)/2); dy = P*2.2;
+    tx = P*1.2; tw = W - P*2.4; ty = dy + cs*13 + P*1.1; th2 = Hh - ty - P - footH - P*0.6;
+  } else {
+    cs = Math.floor((S.format === 'portrait' ? 30 : 24) * W/1080); dx = W - P - cs*12; dy = P;
+    tx = P; tw = W - P*2; ty = dy + cs*13 + P*0.7; th2 = Hh - ty - P - footH;
+  }
+  const hl = it ? it.hl : 'all';
+  drawDiagram(g, dx, dy, cs, tab, th, hl, it);
+
+  // eyebrow
+  g.textAlign = 'left'; g.textBaseline = 'top';
+  const eyebrow = `THE GREAT CROSS · ${tab.quarter.toUpperCase()} · ${tab.label.toUpperCase()}`;
+  const ebSize = Math.round(Math.min(W,Hh) * (wide ? 0.026 : 0.022));
+  g.font = `500 ${ebSize}px ${FONT_M}`; g.fillStyle = th.accent;
+  if ('letterSpacing' in g) g.letterSpacing = `${Math.round(ebSize*0.18)}px`;
+  if (!wide && !story){
+    g.fillText(eyebrow.replace(' · ', ' · '), P, P);
+    g.font = `600 ${Math.round(ebSize*2.1)}px ${FONT_D}`; g.fillStyle = '#f4ecdc';
+    if ('letterSpacing' in g) g.letterSpacing = `${Math.round(ebSize*0.12)}px`;
+    g.fillText('Watchtower', P, P + ebSize*2);
+    g.fillText(`of ${tab.label}`, P, P + ebSize*4.4);
+  } else {
+    g.fillText(eyebrow, story ? P*1.2 : tx, story ? P*1.1 : ty);
+    if (!story) ty += ebSize * 2.6, th2 -= ebSize*2.6;
+  }
+  if ('letterSpacing' in g) g.letterSpacing = '0px';
+
+  // quote
+  const isQuote = it && it.kind === 'quote';
+  const text = ($('qText').value.trim() || 'Choose an insight from the knowledge base.');
+  const attr = $('qAttr').value.trim();
+  const attrH = attr ? Math.round(Math.min(W,Hh)*0.03)*2.4 : 0;
+  const maxS = Math.round(Math.min(W,Hh) * (wide ? 0.07 : story ? 0.075 : 0.068));
+  const fam = isQuote ? `italic 400 {s}px ${FONT_B}` : `500 {s}px ${FONT_B}`;
+  let qy = ty;
+  if (isQuote){
+    g.font = `700 ${Math.round(maxS*2.2)}px ${FONT_D}`; g.fillStyle = th.accent; g.globalAlpha = 0.85;
+    g.fillText('“', tx - maxS*0.15, qy - maxS*0.35); g.globalAlpha = 1;
+    qy += maxS*1.1;
+  }
+  const fit = fitText(g, text, fam, tw, (ty + th2) - qy - attrH, maxS, 22, 1.32);
+  g.font = fam.replace('{s}', fit.size); g.fillStyle = '#f6efe0'; g.textBaseline = 'top';
+  const blockH = fit.lines.length * fit.size * 1.32;
+  if (story || wide) qy += Math.max(0, ((ty + th2) - qy - attrH - blockH) / 2);
+  fit.lines.forEach((l, i) => g.fillText(l, tx, qy + i*fit.size*1.32));
+  if (attr){
+    const as = Math.round(Math.min(W,Hh)*0.026);
+    g.font = `600 ${as}px ${FONT_D}`; g.fillStyle = th.accent;
+    if ('letterSpacing' in g) g.letterSpacing = `${Math.round(as*0.08)}px`;
+    g.fillText(trimToWidth(g, `— ${attr}`, tw), tx, qy + blockH + as*0.9);
+    if ('letterSpacing' in g) g.letterSpacing = '0px';
+  }
+
+  // footer
+  const fy = Hh - P - footH*0.5, url = shareUrl();
+  g.strokeStyle = th.accent; g.globalAlpha = 0.35; g.lineWidth = 1.5;
+  g.beginPath(); g.moveTo(wide ? tx : P, fy - footH*0.42); g.lineTo(W - P, fy - footH*0.42); g.stroke(); g.globalAlpha = 1;
+  const fs = Math.round(Math.min(W,Hh) * (wide ? 0.03 : 0.024));
+  g.textBaseline = 'middle';
+  g.font = `600 ${fs}px ${FONT_D}`; g.fillStyle = '#f4ecdc'; g.textAlign = 'left';
+  if ('letterSpacing' in g) g.letterSpacing = `${Math.round(fs*0.14)}px`;
+  const ctaTxt = 'EXPLORE IT IN 3D';
+  g.fillText(ctaTxt, wide ? tx : P, fy);
+  const ctaW = g.measureText(ctaTxt).width;
+  if ('letterSpacing' in g) g.letterSpacing = '0px';
+  g.font = `500 ${Math.round(fs*0.92)}px ${FONT_M}`; g.fillStyle = th.accent; g.textAlign = 'right';
+  const left = (wide ? tx : P) + ctaW + fs*1.5;
+  g.fillText(trimToWidth(g, displayUrl(url), W - P - left), W - P, fy);
+  g.textAlign = 'left';
+
+  // outputs
+  $('qPreview').src = qCanvas.toDataURL('image/png');
+  const alt = `Quote card from the Great Cross of the ${tab.label} Watchtower. Text: ${isQuote ? '“' + text + '”' : text}${attr ? ' — ' + attr : ''}. Beside it, a 12 by 13 grid of letters with the cross highlighted. Link: ${displayUrl(url)}`;
+  $('qPreview').alt = alt; $('altOut').value = alt;
+}
+let imgTimer = 0;
+function scheduleImage(delay = 140){
+  if (S.tab !== 'image' || $('studio').hidden) return;
+  clearTimeout(imgTimer); imgTimer = setTimeout(renderQuote, delay);
+}
+function captureView(){
+  try {
+    composer.render();
+    const im = new Image();
+    im.onload = () => { snapshot = im; scheduleImage(0); };
+    im.src = renderer.domElement.toDataURL('image/jpeg', 0.92);
+  } catch(e){ toast('Could not capture the 3D view.'); }
+}
+
+let downloadsApi = null;
+let openWeb = false;
+(async () => {
+  for (let i = 0; i < 12 && !(window.claude && window.claude.use); i++) await new Promise(r => setTimeout(r, 250));
+  try {
+    if (window.claude && window.claude.use){
+      downloadsApi = await window.claude.use('downloads');
+      if (downloadsApi) $('saveImg').hidden = false;
+      return;
+    }
+  } catch(e){}
+  // the open web (GitHub Pages): plain downloads and the system share sheet work here
+  openWeb = true;
+  $('saveImg').hidden = false;
+  if (navigator.share){ $('shareImg').hidden = false; $('sharePost').hidden = false; }
+})();
+$('saveImg').addEventListener('click', () => {
+  renderQuote();
+  if (openWeb){
+    qCanvas.toBlob((blob) => {
+      const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+      a.download = `great-cross-${S.theme}-${S.format}.png`; document.body.appendChild(a); a.click();
+      setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+      toast('Image saved');
+    }, 'image/png');
+    return;
+  }
+  if (!downloadsApi) return;
+  qCanvas.toBlob(async (blob) => {
+    try {
+      await downloadsApi.save({ filename:`great-cross-${S.theme}-${S.format}.png`, data:blob });
+      toast('Image saved');
+    } catch(e){
+      if (e && e.code === 'declined') return;
+      if (e && (e.code === 'unavailable' || e.code === 'not_granted' || e.code === 'capability_disabled' || e.code === 'capability_removed')){ $('saveImg').hidden = true; }
+      toast(e && e.code === 'rate_limited' ? 'A save prompt is already open.' : 'Saving is not available here. Right-click or long-press the preview instead.');
+    }
+  }, 'image/png');
+});
+$('shareImg').addEventListener('click', () => {
+  renderQuote();
+  qCanvas.toBlob(async (blob) => {
+    const file = new File([blob], `great-cross-${S.theme}-${S.format}.png`, { type:'image/png' });
+    const data = { files:[file], text:$('postOut').value || buildPost() };
+    try {
+      if (navigator.canShare && navigator.canShare(data)) await navigator.share(data);
+      else await navigator.share({ text:data.text, url:shareUrl() });
+    } catch(e){ if (e && e.name !== 'AbortError') toast('Sharing did not work here. Save the image instead.'); }
+  }, 'image/png');
+});
+$('sharePost').addEventListener('click', async () => {
+  try { await navigator.share({ text:$('postOut').value }); }
+  catch(e){ if (e && e.name !== 'AbortError') toast('Sharing did not work here. Copy the post instead.'); }
+});
+$('copyImg').addEventListener('click', () => {
+  renderQuote();
+  try {
+    const p = new Promise((res) => qCanvas.toBlob(res, 'image/png'));
+    navigator.clipboard.write([new ClipboardItem({ 'image/png': p })])
+      .then(() => toast('Image copied'), () => toast('Copying images is blocked here. Right-click or long-press the preview to save it.'));
+  } catch(e){ toast('Copying images is blocked here. Right-click or long-press the preview to save it.'); }
+});
+
+/* ---------- open / close ---------- */
+let studioReturn = null;
+function openStudio(item){
+  studioReturn = document.activeElement;
+  if (!about.hidden) closeAbout();
+  $('linkUrl').value = S.link; $('deepLink').checked = S.deep; $('optTags').checked = S.tags; $('optCite').checked = S.cite;
+  if (selected){ squareItem = kbSquare(currentKey, selected); } 
+  document.querySelector('#kbFilters [data-f="square"]').hidden = !squareItem;
+  S.theme = currentKey;
+  const start = item || S.item || kbTablet(currentKey)[0];
+  $('studio').hidden = false;
+  chooseItem(start);
+  if (S.bg === 'view') captureView();
+  setTab(S.tab);
+  $('studioClose').focus();
+}
+function closeStudio(){
+  $('studio').hidden = true;
+  if (studioReturn && studioReturn.focus) studioReturn.focus();
+}
+$('shareBtn').addEventListener('click', () => openStudio());
+$('studioClose').addEventListener('click', closeStudio);
+$('studioBackdrop').addEventListener('click', closeStudio);
+$('aboutShare').addEventListener('click', () => { closeAbout(); openStudio(KB_STATIC[0]); });
+$('dShare').addEventListener('click', () => {
+  if (!selected) return;
+  squareItem = kbSquare(currentKey, selected);
+  S.filter = 'square';
+  document.querySelectorAll('#kbFilters button').forEach(x => x.setAttribute('aria-pressed', String(x.dataset.f === 'square')));
+  openStudio(squareItem);
+});
+$('dLink').addEventListener('click', () => {
+  if (!selected) return;
+  let u = (S.link || DEFAULT_LINK).trim().replace(/#.*$/, '');
+  u += `#${currentKey}-c${selected.c}r${selected.r}`;
+  copyText(u, 'Link to this square copied');
+});
+
+/* ---------- deep links: #water or #water-c6r7 ---------- */
+(function readHash(){
+  const m = (location.hash || '').slice(1).match(/^(air|water|earth|fire)(?:-c(\d{1,2})r(\d{1,2}))?$/);
+  if (!m) return;
+  if (m[1] !== currentKey) setTablet(m[1]);
+  if (m[2]){
+    const cell = cells.find(c => c.c === +m[2] && c.r === +m[3]);
+    if (cell) select(cell);
+  }
+})();
+renderSegs();
+
+/* ---------- boot ---------- */
+applyStage(0, true);
+renderStageUI();
+requestAnimationFrame(frame);
+window.__crossReady = true;
+if (document.fonts && document.fonts.load){
+  Promise.all([document.fonts.load(`600 100px "Cinzel"`), document.fonts.load(`700 100px "Cinzel"`),
+               document.fonts.load(`italic 400 40px "Spectral"`), document.fonts.load(`500 20px "IBM Plex Mono"`)])
+    .then(() => { cells.forEach(paintCell); drawRing(); }).catch(() => {});
+}
+</script>
+</body>
+</html>
