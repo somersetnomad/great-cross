@@ -305,7 +305,24 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .video small{font:500 11px/1.3 var(--f-mono);color:var(--muted);letter-spacing:.04em}
 .video p{margin:0;font-size:14px;line-height:1.4;color:var(--muted)}
 .careful{border-left:2px solid var(--accent);padding:2px 0 2px 14px}
+
+/* ---------- John Dee section ---------- */
+.dee-intro{display:grid;grid-template-columns:110px minmax(0,1fr);gap:20px;align-items:start}
+.monas{display:grid;gap:6px;justify-items:center}
+.monas svg{width:96px;height:auto;filter:drop-shadow(0 0 14px rgba(245,196,81,.25))}
+.monas small{font:400 11px/1.35 var(--f-mono);color:var(--faint);text-align:center}
+.timeline{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:0;border-left:1px solid var(--hair-strong);margin-left:6px}
+.timeline li{display:grid;grid-template-columns:62px minmax(0,1fr);gap:12px;padding:7px 0 7px 16px;position:relative}
+.timeline li::before{content:"";position:absolute;left:-4px;top:14px;width:7px;height:7px;border-radius:50%;background:var(--accent)}
+.timeline b{font:500 13px/1.5 var(--f-mono);color:var(--accent);font-variant-numeric:tabular-nums}
+.timeline span{font:400 15.5px/1.5 var(--f-body);color:#d9d2c2}
+.reasons{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:12px}
+.reasons li{display:grid;gap:3px}
+.reasons strong{font:600 14px/1.3 var(--f-display);letter-spacing:.06em;color:var(--ink)}
+.reasons p{margin:0;font-size:15.5px}
 @media (max-width:760px){
+  .dee-intro{grid-template-columns:1fr}
+  .monas{justify-items:start}
   .twocol,.videos{grid-template-columns:1fr}
   .rhythm{grid-template-columns:repeat(2,minmax(0,1fr))}
   .week dl{grid-template-columns:1fr;gap:2px}
@@ -428,6 +445,52 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
       <p class="lead">You are looking at the centre of a grid of letters that John Dee, scholar and adviser at the court of Elizabeth I, wrote down in the 1580s. Dee believed the grid was dictated by angels, seen in a crystal by his scryer Edward Kelley. Every letter belongs to the name of an angel or a name of God, and the layout of the grid tells you how to read those names out.</p>
 
+
+      <section id="who-dee">
+        <h3>Who was John Dee?</h3>
+        <div class="dee-intro">
+          <figure class="monas" style="margin:0">
+            <svg viewBox="0 0 100 150" fill="none" stroke="var(--accent)" stroke-width="3.2" stroke-linecap="round" role="img" aria-label="Dee's Monas Hieroglyphica symbol: a crescent above a circle with a central dot, standing on a cross with two horns at its foot.">
+              <path d="M27 10 A23 23 0 0 0 73 10"/>
+              <circle cx="50" cy="44" r="19"/>
+              <circle cx="50" cy="44" r="3.2" fill="var(--accent)" stroke="none"/>
+              <path d="M50 63 V124 M31 90 H69"/>
+              <path d="M50 124 C50 110 34 106 28 118 M50 124 C50 110 66 106 72 118"/>
+            </svg>
+            <small>The Monas Hieroglyphica, Dee's own symbol (1564)</small>
+          </figure>
+          <div>
+            <p>John Dee was one of the most learned people in Tudor England. He studied at Cambridge and became a founding fellow of Trinity College, then studied at Louvain under the mathematician Gemma Frisius, where he befriended the mapmakers Gerardus Mercator and Abraham Ortelius. In his early twenties he lectured on Euclid's geometry in Paris.</p>
+            <p>Back in England he became adviser to Elizabeth I on astrology and science. He built one of the largest libraries in England at his house in Mortlake, by the Thames. He also spent more than twenty-five years trying to speak with angels, which is where this page comes in.</p>
+          </div>
+        </div>
+        <ol class="timeline" aria-label="Timeline of John Dee's life">
+          <li><b>1527</b><span>Born in London on 13 July.</span></li>
+          <li><b>1546</b><span>A founding fellow of Trinity College, Cambridge.</span></li>
+          <li><b>1548</b><span>Studies at Louvain under Gemma Frisius and meets Mercator.</span></li>
+          <li><b>1555</b><span>Arrested for casting horoscopes of Queen Mary and Princess Elizabeth. He clears himself of treason.</span></li>
+          <li><b>1559</b><span>Chooses the date of Elizabeth I's coronation and becomes her adviser.</span></li>
+          <li><b>1564</b><span>Publishes the <em>Monas Hieroglyphica</em>, a single symbol meant to unite astronomy, alchemy and geometry.</span></li>
+          <li><b>1569</b><span>By his own note, begins his attempts to contact angels.</span></li>
+          <li><b>1570</b><span>Writes the <em>Mathematical Preface</em> to the first English translation of Euclid, arguing that mathematics underlies every art.</span></li>
+          <li><b>1582</b><span>Begins his sessions with the scryer Edward Kelley.</span></li>
+          <li><b>1583</b><span>Proposes reforming England's calendar along Gregorian lines; it is rejected. Leaves for Poland and Bohemia, meeting Emperor Rudolf II. His library is raided while he is away.</span></li>
+          <li><b>1587</b><span>Dates the corrected Great Table, 20 April.</span></li>
+          <li><b>1589</b><span>Returns to England.</span></li>
+          <li><b>1595</b><span>Appointed Warden of Christ's College, Manchester.</span></li>
+          <li><b>1608–9</b><span>Dies at Mortlake in reduced circumstances, his reputation clouded by talk of sorcery.</span></li>
+        </ol>
+
+        <h3 style="margin-top:22px">Why study Dee?</h3>
+        <ul class="reasons">
+          <li><strong>He lived before science and magic split apart.</strong><p>The same man championed mathematics in English, trained navigators and spoke with angels. Studying him undoes the tidy story that rational science and occult belief always belonged to different people.</p></li>
+          <li><strong>He helped turn England towards the sea.</strong><p>Dee advised English voyages of discovery, taught pilots and designed instruments for navigating polar waters. He argued for a maritime “British Empire”, a phrase often credited to him, though Humphrey Llwyd used it a few years earlier.</p></li>
+          <li><strong>He is the root of a living tradition.</strong><p>Almost every modern system of magic that works with angels or Watchtowers traces back to his papers, usually through the Golden Dawn. To understand that whole field, you have to start with him.</p></li>
+          <li><strong>He wrote everything down.</strong><p>Dee kept diaries of every session, what was asked, what was seen, what was said. They are a rare, detailed look at a Renaissance mind at work, and they let you check later claims against his own words.</p></li>
+          <li><strong>His story is a lesson in seeking knowledge.</strong><p>Dee wanted to know everything and trusted his scryer completely. He was suspected of sorcery, lost much of his library, and died in reduced circumstances. His life raises questions about curiosity, credulity and cost that still apply.</p></li>
+          <li><strong>You can still stand in front of his things.</strong><p>The British Museum holds objects linked to him, including an obsidian mirror of Aztec origin, a crystal and wax seals used in his sessions. Shakespeare's Prospero is often suggested to have been modelled on him.</p></li>
+        </ul>
+      </section>
       <section>
         <h3>Four tablets, four quarters of the world</h3>
         <p>Dee's Great Table is one large table divided into four quarters, one for each compass direction. Each quarter is 12 squares wide and 13 deep, 156 squares in all, and a small Table of Union joins the four at their inner corners. Dee's text explains why the quarters exist: God set guardians over the world to keep the wicked spirits in check.</p>
@@ -498,7 +561,7 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
       </section>
       <section>
         <h3>Where it comes from</h3>
-        <p>Dee (1527–1608) was a mathematician, astrologer and collector of one of the largest libraries in England. From 1569 he tried to contact angels, and from the early 1580s he worked with Kelley, keeping careful diaries of every session. The tables were refined over several years; the version Dee marked as corrected is dated 20 April 1587 and credited to the angel Raphael.</p>
+        <p>The tables came out of Dee's sessions with Kelley in the 1580s, recorded day by day in his diaries. They were refined over several years; the version Dee marked as corrected is dated 20 April 1587 and credited to the angel Raphael.</p>
         <p>After Dee's death his most secret books lay hidden in the secret drawer of a cedar chest. A London family found them in 1662, their maid burned about half of the papers as kindling, and the rest survived the Great Fire of 1666. They reached the antiquary Elias Ashmole in 1672 and are now in the British Library. In the 1880s and 1890s the Hermetic Order of the Golden Dawn built its “Enochian” magic on a small part of this material, and most modern books follow their version.</p>
       </section>
 
@@ -1678,6 +1741,7 @@ function frame(now){
    ================================================================ */
 const DEFAULT_LINK = 'https://somersetnomad.github.io/great-cross/';
 const CITE_BOOK = "Skinner & Rankine, The Practical Angel Magic of John Dee's Enochian Tables (2004)";
+const CITE_LIFE = "John Dee, Wikipedia";
 const CITE_TABLE = "Letters from John Dee's corrected Great Table (1587), via Skinner & Rankine (2004)";
 const joinList = (a) => a.length < 2 ? a.join('') : a.slice(0,-1).join(', ') + ' and ' + a[a.length-1];
 
@@ -1694,6 +1758,18 @@ const KB_STATIC = [
     text:"Dee's surviving angel books came through the Great Fire of London in 1666, reached the antiquary Elias Ashmole in 1672, and are now in the British Library." },
   { id:'gd', cat:'history', kind:'fact', hl:'all', attr:'The Golden Dawn and Dee', cite:CITE_BOOK,
     text:"The Golden Dawn built its Enochian magic on only a small part of Dee's material. Most modern books follow their version, not Dee's corrected table." },
+  { id:'trinity', cat:'history', kind:'fact', hl:'all', attr:'John Dee, 1527–1608', cite:CITE_LIFE,
+    text:"John Dee was a founding fellow of Trinity College, Cambridge, studied under Gemma Frisius at Louvain, and counted the mapmaker Gerardus Mercator among his friends." },
+  { id:'coronation', cat:'history', kind:'fact', hl:'all', attr:'John Dee and Elizabeth I', cite:CITE_LIFE,
+    text:"John Dee chose the date of Elizabeth I's coronation and became her adviser on astrology and science." },
+  { id:'preface', cat:'history', kind:'fact', hl:'all', attr:'The Mathematical Preface, 1570', cite:CITE_LIFE,
+    text:"In 1570 John Dee wrote the preface to the first English translation of Euclid, arguing that mathematics underlies every art and science." },
+  { id:'sea', cat:'history', kind:'fact', hl:'all', attr:'John Dee and navigation', cite:CITE_LIFE,
+    text:"The man who spoke with angels also trained England's navigators and designed instruments for sailing polar waters. In Dee's world, science and magic had not yet split apart." },
+  { id:'museum', cat:'history', kind:'fact', hl:'all', attr:'John Dee at the British Museum', cite:"British Museum collection",
+    text:"You can still see John Dee's world today: the British Museum holds an obsidian mirror of Aztec origin, a crystal and wax seals linked to his angel sessions." },
+  { id:'monas', cat:'history', kind:'fact', hl:'all', attr:'Monas Hieroglyphica, 1564', cite:CITE_LIFE,
+    text:"In 1564 John Dee published the Monas Hieroglyphica, a single symbol meant to unite astronomy, alchemy and geometry." },
   { id:'motto', cat:'history', kind:'quote', hl:'all', attr:"John Dee's motto", cite:CITE_BOOK,
     text:"Veritas praevalebit. Truth prevails." },
   { id:'watchmen', cat:'cross', kind:'quote', hl:'king', attr:'John Dee, Tabula Bonorum Angelorum Invocationes', cite:CITE_BOOK,
