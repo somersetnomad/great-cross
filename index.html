@@ -255,7 +255,61 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
   .field-row{grid-template-columns:1fr}
   .opt{grid-template-columns:1fr;gap:6px}
 }
+
+/* ---------- Photos, practice programme, videos ---------- */
+.photo{margin:0;display:grid;gap:6px}
+.about figure.photo{margin:0;display:grid;grid-template-columns:1fr;gap:6px;align-items:stretch}
+.about figure.photo figcaption{display:block}
+.photo img{width:100%;aspect-ratio:16/7;object-fit:cover;border-radius:12px;display:block;background:rgba(255,255,255,.04);border:1px solid var(--hair)}
+.photo.tall img{aspect-ratio:16/9}
+.photo figcaption,.credit{font:400 11.5px/1.3 var(--f-mono);color:var(--faint);letter-spacing:.02em}
+.photo figcaption a,.credit a{color:var(--muted);text-decoration:underline;text-decoration-color:var(--hair-strong);text-underline-offset:2px}
+.about a{color:var(--accent)}
+.twocol{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px}
+.panel{border:1px solid var(--hair);border-radius:12px;padding:14px 15px;background:rgba(255,255,255,.03)}
+.panel h4{margin:0 0 8px;font:600 12.5px/1.2 var(--f-display);letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.panel ul{margin:0;padding-left:18px;display:grid;gap:6px;font:400 15px/1.45 var(--f-body);color:#d9d2c2}
+.rhythm{list-style:none;margin:10px 0 0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.rhythm li{border:1px solid var(--hair);border-radius:10px;padding:11px 12px;display:grid;gap:4px;align-content:start}
+.rhythm b{font:500 12px/1 var(--f-mono);color:var(--accent);letter-spacing:.06em;font-variant-numeric:tabular-nums}
+.rhythm span{font:600 13px/1.2 var(--f-display);letter-spacing:.08em;text-transform:uppercase;color:var(--ink)}
+.rhythm p{margin:0;font-size:14px;line-height:1.4;color:var(--muted)}
+.progress{display:flex;align-items:center;gap:12px;margin-top:6px}
+.progress .bar{flex:1;height:6px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden}
+.progress .bar i{display:block;height:100%;width:0;background:var(--accent);border-radius:99px;transition:width .4s}
+.progress span{font:500 12px/1 var(--f-mono);color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.phase{display:grid;gap:12px}
+.phase-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.phase-head b{font:600 13px/1 var(--f-mono);letter-spacing:.14em;color:var(--accent);text-transform:uppercase}
+.phase-head h3{margin:0}
+.weeks{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.week{border:1px solid var(--hair);border-radius:12px;padding:14px 15px;display:grid;gap:8px;transition:border-color .3s,background .3s}
+.week.done{border-color:var(--accent);background:rgba(255,255,255,.035)}
+.week-top{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;align-items:start}
+.week-top input{width:20px;height:20px;margin-top:3px;accent-color:var(--accent);cursor:pointer}
+.week-top label{cursor:pointer;display:grid;gap:3px}
+.week-top small{font:500 11px/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.week-top strong{font:600 17px/1.25 var(--f-display);letter-spacing:.04em;color:var(--ink)}
+.week dl{margin:0;display:grid;grid-template-columns:92px minmax(0,1fr);gap:6px 12px;font:400 15px/1.45 var(--f-body)}
+.week dt{font:500 10.5px/1.6 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+.week dd{margin:0;color:#d9d2c2}
+.week dd em{color:var(--ink)}
+.week .go{appearance:none;border:0;background:none;padding:0;color:var(--accent);font:inherit;cursor:pointer;text-decoration:underline;text-underline-offset:2px}
+.videos{list-style:none;margin:10px 0 0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.video a{display:grid;gap:8px;text-decoration:none;color:var(--ink);border:1px solid var(--hair);border-radius:12px;padding:10px;transition:border-color .2s,background .2s;height:100%;box-sizing:border-box;align-content:start}
+.video a:hover{border-color:var(--accent);background:rgba(255,255,255,.03)}
+.thumb{position:relative;aspect-ratio:16/9;border-radius:8px;overflow:hidden;background:radial-gradient(circle at 50% 50%,rgba(255,255,255,.08),rgba(255,255,255,.02));display:grid;place-items:center}
+.thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.thumb svg{position:relative;width:44px;height:44px;filter:drop-shadow(0 4px 10px rgba(0,0,0,.6))}
+.video b{font:600 14.5px/1.3 var(--f-body)}
+.video small{font:500 11px/1.3 var(--f-mono);color:var(--muted);letter-spacing:.04em}
+.video p{margin:0;font-size:14px;line-height:1.4;color:var(--muted)}
+.careful{border-left:2px solid var(--accent);padding:2px 0 2px 14px}
 @media (max-width:760px){
+  .twocol,.videos{grid-template-columns:1fr}
+  .rhythm{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .week dl{grid-template-columns:1fr;gap:2px}
+  .week dd{margin-bottom:6px}
   .about figure{grid-template-columns:1fr}
   .ranks li{grid-template-columns:1fr;gap:4px}
   .about p{font-size:16px}
@@ -306,6 +360,10 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
       <button type="button" class="icon-btn" id="aboutBtn" aria-haspopup="dialog" title="What is this?">
         <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="8" cy="8" r="6.5"/><path d="M6.2 6.2a1.9 1.9 0 1 1 2.6 1.8c-.5.2-.8.6-.8 1.1v.5"/><circle cx="8" cy="11.6" r=".5" fill="currentColor"/></svg>
         <span class="lbl">Learn</span>
+      </button>
+      <button type="button" class="icon-btn" id="practiceBtn" aria-haspopup="dialog" title="A twelve-week practice programme">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="2" y="3" width="12" height="11" rx="1.5"/><path d="M2 6.5h12M5.5 1.5v3M10.5 1.5v3"/><path d="M5 9.5l1.6 1.6L10.8 7.8"/></svg>
+        <span class="lbl">Practice</span>
       </button>
       <button type="button" class="icon-btn share" id="shareBtn" aria-haspopup="dialog" title="Make posts and quote images">
         <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="3.5" r="2"/><circle cx="4" cy="8" r="2"/><circle cx="12" cy="12.5" r="2"/><path d="M5.8 7 10.2 4.5M5.8 9 10.2 11.5"/></svg>
@@ -408,6 +466,36 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
         <p style="margin-top:10px">The same rule produces all six Seniors in every tablet. Click any square on the cross to see which names pass through it.</p>
       </section>
 
+
+      <section>
+        <h3>Why learn this?</h3>
+        <figure class="photo tall">
+          <img src="img/shewstone.jpg" alt="A clear glass sphere resting on dark rock by the water." loading="lazy" width="600" height="900">
+          <figcaption>Photo by <a href="https://unsplash.com/@jdphoto2000" target="_blank" rel="noopener">Jake Willett</a> on <a href="https://unsplash.com/photos/clear-glass-ball-on-brown-rock-66b8Iowz7NI" target="_blank" rel="noopener">Unsplash</a></figcaption>
+        </figure>
+        <p>It depends whether you mean what Dee was promised or what a person reliably gains today.</p>
+        <div class="twocol">
+          <div class="panel">
+            <h4>What the system promised</h4>
+            <ul>
+              <li>A working directory of a spiritual hierarchy: the Holy Names govern the King, the King's name calls the Seniors, and so on down.</li>
+              <li>Counsel from the Seniors on human affairs and judgement.</li>
+              <li>From the angels of the Lesser Angles: healing, the powers of metals and stones, and skill in transformation.</li>
+              <li>The angels themselves, called “to visible appearance”.</li>
+            </ul>
+          </div>
+          <div class="panel">
+            <h4>What study reliably gives</h4>
+            <ul>
+              <li>Historical literacy in a thread that runs from Dee through the Golden Dawn to most modern ceremonial magic.</li>
+              <li>The ability to tell Dee's text from later layers, which most books on the subject blur.</li>
+              <li>A contemplative discipline: holding a structure in mind and tracing it slowly.</li>
+              <li>A beautiful puzzle, and depth for anything you make or teach from it.</li>
+            </ul>
+          </div>
+        </div>
+        <p style="margin-top:12px">There is no evidence that the angels or their gifts work as Dee was told. Whether they do is a matter of belief and experience that each person answers for themselves. What mastery reliably gets you is understanding, discernment and a rich practice. The <button type="button" class="go" id="toPractice" style="appearance:none;border:0;background:none;padding:0;color:var(--accent);font:inherit;cursor:pointer;text-decoration:underline;text-underline-offset:2px">twelve-week practice programme</button> is built around exactly that.</p>
+      </section>
       <section>
         <h3>Where it comes from</h3>
         <p>Dee (1527–1608) was a mathematician, astrologer and collector of one of the largest libraries in England. From 1569 he tried to contact angels, and from the early 1580s he worked with Kelley, keeping careful diaries of every session. The tables were refined over several years; the version Dee marked as corrected is dated 20 April 1587 and credited to the angel Raphael.</p>
@@ -441,6 +529,205 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
   </article>
 </div>
 
+
+<div class="about" id="practice" role="dialog" aria-modal="true" aria-labelledby="practiceTitle" hidden>
+  <div class="about-backdrop" id="practiceBackdrop"></div>
+  <article class="about-sheet" tabindex="-1">
+    <div class="about-inner">
+      <div class="about-head">
+        <div>
+          <p class="kicker">Dedicated practice</p>
+          <h2 id="practiceTitle">Twelve weeks at the Watchtowers</h2>
+        </div>
+        <button type="button" class="xbtn" id="practiceClose" aria-label="Close the practice programme">×</button>
+      </div>
+      <figure class="photo tall"><img src="img/manuscript.jpg" alt="A very old handwritten book with an illuminated initial." loading="lazy"><figcaption>Photo by <a href="https://unsplash.com/@boudewijn_huysmans" target="_blank" rel="noopener">Boudewijn Huysmans</a> on <a href="https://unsplash.com/photos/a-very-old-book-with-some-writing-on-it-JdxsCHWRSXQ" target="_blank" rel="noopener">Unsplash</a></figcaption></figure>
+      <p class="lead">Twelve weeks, one for each of the Holy Names. The programme takes you from Dee's history to holding all four crosses in memory, through study and contemplation. It asks for about 25 minutes a day and one longer session at the weekend.</p>
+      <div class="progress" aria-live="polite"><div class="bar"><i id="progBar"></i></div><span id="progText">0 of 12 weeks</span></div>
+
+      <section>
+        <h3>The daily rhythm</h3>
+        <figure class="photo"><img src="img/candle.jpg" alt="A single lit candle in a dark room." loading="lazy"><figcaption>Photo by <a href="https://unsplash.com/@sixteenmilesout" target="_blank" rel="noopener">Sixteen Miles Out</a> on <a href="https://unsplash.com/photos/lighted-candle-in-dark-room-3CA_-xcpulY" target="_blank" rel="noopener">Unsplash</a></figcaption></figure>
+        <ol class="rhythm">
+          <li><b>5 min</b><span>Settle</span><p>Sit somewhere quiet. Light a candle if it helps. Breathe until your attention is here.</p></li>
+          <li><b>10 min</b><span>Study</span><p>The week's daily task, on paper and on the site.</p></li>
+          <li><b>5 min</b><span>Contemplate</span><p>Trace the week's names slowly, letter by letter, without trying to get anywhere.</p></li>
+          <li><b>5 min</b><span>Record</span><p>Write in a practice diary, as Dee did: the date, what you did, what you noticed.</p></li>
+        </ol>
+        <p style="margin-top:12px">At the weekend, take an hour: watch the week's video if there is one, draw the week's cross from memory, and read back through your diary.</p>
+      </section>
+      
+      <section class="phase">
+        <div class="phase-head"><b>Phase I</b><h3>Foundations</h3></div>
+        <figure class="photo"><img src="img/ledger.jpg" alt="A close-up of an old open ledger with handwritten notes and a quill." loading="lazy"><figcaption>Photo by <a href="https://unsplash.com/@cameraobscura2000" target="_blank" rel="noopener">camera obscura</a> on <a href="https://unsplash.com/photos/a-close-up-of-an-old-open-ledger-with-handwritten-notes-rvVhr2LngP4" target="_blank" rel="noopener">Unsplash</a></figcaption></figure>
+        <p>Learn the history and the shape of the whole before you touch the names.</p>
+        <ol class="weeks">
+            <li class="week" data-week="1">
+              <div class="week-top"><input type="checkbox" id="wk1" data-week="1"><label for="wk1"><small>Week 1</small><strong>Meet Dee and Kelley</strong></label></div>
+              <dl>
+                <dt>Aim</dt><dd>Know who made the tables, when, and why.</dd>
+                <dt>Daily</dt><dd>Read a little of the guide each day, from <em>Where it comes from</em> to the end. <button type="button" class="go" data-go="guide">Open the guide</button></dd>
+                <dt>Watch</dt><dd>Watch <em>John Dee: Queen Elizabeth's Wizard</em>.</dd>
+                <dt>Journal</dt><dd>What draws you to this material, and what are you hoping to find?</dd>
+              </dl>
+            </li>
+            <li class="week" data-week="2">
+              <div class="week-top"><input type="checkbox" id="wk2" data-week="2"><label for="wk2"><small>Week 2</small><strong>The table as a whole</strong></label></div>
+              <dl>
+                <dt>Aim</dt><dd>See the four quarters, the 12 × 13 grid and the cross inside it.</dd>
+                <dt>Daily</dt><dd>Each day, draw a 12 × 13 grid from memory and shade the cross. Then compare it with stage 0 of a different tablet. <button type="button" class="go" data-go="stage0">Open stage 0</button></dd>
+                <dt>Watch</dt><dd>Watch Esoterica on the tools and rituals of the sessions.</dd>
+                <dt>Journal</dt><dd>What is the difference between the table and the cross? Why might the names live in the cross?</dd>
+              </dl>
+            </li>
+            <li class="week" data-week="3">
+              <div class="week-top"><input type="checkbox" id="wk3" data-week="3"><label for="wk3"><small>Week 3</small><strong>Sources and layers</strong></label></div>
+              <dl>
+                <dt>Aim</dt><dd>Separate Dee's text from what was added later.</dd>
+                <dt>Daily</dt><dd>Read <em>What is Dee and what is not</em> in the guide. Each day, sort one claim you have met online into "Dee" or "later layer". <button type="button" class="go" data-go="guide">Open the guide</button></dd>
+                <dt>Watch</dt><dd>Watch the conversation on Enochian magic in modern occultism.</dd>
+                <dt>Journal</dt><dd>List three things you believed about Enochian magic last month. Which layer did each come from?</dd>
+              </dl>
+            </li>
+        </ol>
+      </section>
+      <section class="phase">
+        <div class="phase-head"><b>Phase II</b><h3>The Cross</h3></div>
+        <figure class="photo"><img src="img/stars.jpg" alt="A dark night sky filled with stars." loading="lazy"><figcaption>Photo by <a href="https://unsplash.com/@kaip" target="_blank" rel="noopener">Kai Pilger</a> on <a href="https://unsplash.com/photos/the-night-sky-is-filled-with-stars-Ef6iL87-vOA" target="_blank" rel="noopener">Unsplash</a></figcaption></figure>
+        <p>Learn the reading rules and the names they produce, until you can rebuild them on paper.</p>
+        <ol class="weeks">
+            <li class="week" data-week="4">
+              <div class="week-top"><input type="checkbox" id="wk4" data-week="4"><label for="wk4"><small>Week 4</small><strong>The twelve Holy Names</strong></label></div>
+              <dl>
+                <dt>Aim</dt><dd>Hold all twelve names in order.</dd>
+                <dt>Daily</dt><dd>Write the twelve names as Dee's banners run, clockwise from the East: ORO IBAH AOZPI · MOR DIAL HCTGA · OIP TEAA PDOCE · MPH ARSL GAIOL. Check yourself against stage I of each tablet. <button type="button" class="go" data-go="stage1">Open stage I</button></dd>
+                <dt>Watch</dt><dd>None this week. Let the names settle.</dd>
+                <dt>Journal</dt><dd>Which name do you find yourself returning to? Note when it comes to mind during the day.</dd>
+              </dl>
+            </li>
+            <li class="week" data-week="5">
+              <div class="week-top"><input type="checkbox" id="wk5" data-week="5"><label for="wk5"><small>Week 5</small><strong>The six Seniors</strong></label></div>
+              <dl>
+                <dt>Aim</dt><dd>Derive the Seniors yourself from the reading rule.</dd>
+                <dt>Daily</dt><dd>On paper, take one tablet a day: start at the centre of row 7 and read outward along each arm. Then open stage II and check your six names. <button type="button" class="go" data-go="stage2">Open stage II</button></dd>
+                <dt>Watch</dt><dd>None this week.</dd>
+                <dt>Journal</dt><dd>Dee gives the Seniors knowledge of human affairs and judgement. Where in your week did you most need good judgement?</dd>
+              </dl>
+            </li>
+            <li class="week" data-week="6">
+              <div class="week-top"><input type="checkbox" id="wk6" data-week="6"><label for="wk6"><small>Week 6</small><strong>The four Kings</strong></label></div>
+              <dl>
+                <dt>Aim</dt><dd>Understand how a King's name is gathered from the centre.</dd>
+                <dt>Daily</dt><dd>Follow Dee's construction of BATAIVA in the guide, then try to find the other three Kings in their grids before checking stage III. <button type="button" class="go" data-go="stage3">Open stage III</button></dd>
+                <dt>Watch</dt><dd>None this week.</dd>
+                <dt>Journal</dt><dd>The King stands watch over a quarter of the world. What do you keep watch over?</dd>
+              </dl>
+            </li>
+        </ol>
+      </section>
+      <section class="phase">
+        <div class="phase-head"><b>Phase III</b><h3>The Four Quarters</h3></div>
+        <figure class="photo"><img src="img/compass.jpg" alt="A brass pocket compass lying open on a wooden table." loading="lazy"><figcaption>Photo by <a href="https://unsplash.com/@aaronburden" target="_blank" rel="noopener">Aaron Burden</a> on <a href="https://unsplash.com/photos/shallow-focus-photo-of-compass-NXt5PrOb_7U" target="_blank" rel="noopener">Unsplash</a></figcaption></figure>
+        <p>Spend a week with each Watchtower, in the order Dee lists the Kings.</p>
+        <ol class="weeks">
+            <li class="week" data-week="7">
+              <div class="week-top"><input type="checkbox" id="wk7" data-week="7"><label for="wk7"><small>Week 7</small><strong>East: the Watchtower of Air</strong></label></div>
+              <dl>
+                <dt>Aim</dt><dd>Know BATAIVAH, ORO IBAH AOZPI and the six Seniors of the East by heart.</dd>
+                <dt>Daily</dt><dd>Sit facing east. Trace the cross on paper and say its names slowly, using Dee's spoken forms where he gives them (Hetemorda for HTMORDA). Then click through its squares on the site. <button type="button" class="go" data-go="air">Open the Air tablet</button></dd>
+                <dt>Watch</dt><dd>Revisit any earlier video.</dd>
+                <dt>Journal</dt><dd>What did this week feel like? Record impressions plainly, without deciding what they mean.</dd>
+              </dl>
+            </li>
+            <li class="week" data-week="8">
+              <div class="week-top"><input type="checkbox" id="wk8" data-week="8"><label for="wk8"><small>Week 8</small><strong>West: the Watchtower of Water</strong></label></div>
+              <dl>
+                <dt>Aim</dt><dd>Know RAAGIOSL, MPH ARSL GAIOL and the Seniors of the West.</dd>
+                <dt>Daily</dt><dd>The same practice, facing west. Pay attention to how this cross differs from the East's. <button type="button" class="go" data-go="water">Open the Water tablet</button></dd>
+                <dt>Watch</dt><dd>None this week.</dd>
+                <dt>Journal</dt><dd>Compare this week with last week. What changed, in the practice or in you?</dd>
+              </dl>
+            </li>
+            <li class="week" data-week="9">
+              <div class="week-top"><input type="checkbox" id="wk9" data-week="9"><label for="wk9"><small>Week 9</small><strong>North: the Watchtower of Earth</strong></label></div>
+              <dl>
+                <dt>Aim</dt><dd>Know ICZHIHAL, MOR DIAL HCTGA and the Seniors of the North.</dd>
+                <dt>Daily</dt><dd>The same practice, facing north. Draw the North cross from memory before you look. <button type="button" class="go" data-go="earth">Open the Earth tablet</button></dd>
+                <dt>Watch</dt><dd>None this week.</dd>
+                <dt>Journal</dt><dd>Which parts of the system now feel solid, and which still slip away?</dd>
+              </dl>
+            </li>
+            <li class="week" data-week="10">
+              <div class="week-top"><input type="checkbox" id="wk10" data-week="10"><label for="wk10"><small>Week 10</small><strong>South: the Watchtower of Fire</strong></label></div>
+              <dl>
+                <dt>Aim</dt><dd>Know EDLPRNAA, OIP TEAA PDOCE and the Seniors of the South.</dd>
+                <dt>Daily</dt><dd>The same practice, facing south. On the last day, sit with all four crosses laid out around you. <button type="button" class="go" data-go="fire">Open the Fire tablet</button></dd>
+                <dt>Watch</dt><dd>None this week.</dd>
+                <dt>Journal</dt><dd>Having met all four, what holds them together?</dd>
+              </dl>
+            </li>
+        </ol>
+      </section>
+      <section class="phase">
+        <div class="phase-head"><b>Phase IV</b><h3>Integration</h3></div>
+        <figure class="photo"><img src="img/tower.jpg" alt="A lone round stone tower standing on open ground, in black and white." loading="lazy"><figcaption>Photo by <a href="https://unsplash.com/@sgodfrey" target="_blank" rel="noopener">Simon Godfrey</a> on <a href="https://unsplash.com/photos/grayscale-photo-of-tower-XbTtN56m-kk" target="_blank" rel="noopener">Unsplash</a></figcaption></figure>
+        <p>Bring it together, look at the language behind it, and pass it on.</p>
+        <ol class="weeks">
+            <li class="week" data-week="11">
+              <div class="week-top"><input type="checkbox" id="wk11" data-week="11"><label for="wk11"><small>Week 11</small><strong>The language behind the tables</strong></label></div>
+              <dl>
+                <dt>Aim</dt><dd>See where the letters themselves come from.</dd>
+                <dt>Daily</dt><dd>Learn to recognise a few Enochian letters, and copy one tablet's cross in the script. <button type="button" class="go" data-go="guide">Open the guide</button></dd>
+                <dt>Watch</dt><dd>Watch both Esoterica videos on the Enochian language and the Liber Loagaeth.</dd>
+                <dt>Journal</dt><dd>Does seeing the original script change how the names feel to you?</dd>
+              </dl>
+            </li>
+            <li class="week" data-week="12">
+              <div class="week-top"><input type="checkbox" id="wk12" data-week="12"><label for="wk12"><small>Week 12</small><strong>Teach it</strong></label></div>
+              <dl>
+                <dt>Aim</dt><dd>Show you understand the system by explaining it.</dd>
+                <dt>Daily</dt><dd>Rebuild all four crosses from memory. Then write a one-page explanation for a friend, and share one insight with the share studio. <button type="button" class="go" data-go="share">Open the share studio</button></dd>
+                <dt>Watch</dt><dd>Pick the video that helped most and send it to someone.</dd>
+                <dt>Journal</dt><dd>What do you now understand that you did not twelve weeks ago? What do you want to study next?</dd>
+              </dl>
+            </li>
+        </ol>
+      </section>
+
+      <section>
+        <h3>Videos</h3>
+        <p>Talks from scholars and channels that work from the sources. Each one opens on YouTube.</p>
+        <ul class="videos">
+          <li class="video"><a href="https://www.youtube.com/watch?v=t9m4S0lI95s" target="_blank" rel="noopener noreferrer">
+            <span class="thumb"><img src="https://i.ytimg.com/vi/t9m4S0lI95s/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="22" fill="rgba(0,0,0,.55)" stroke="rgba(255,255,255,.7)" stroke-width="1.5"/><path d="M19 15l15 9-15 9z" fill="#fff"/></svg></span>
+            <b>John Dee: Queen Elizabeth's Wizard</b><small>Explaining History · pairs with week 1</small><p>Who Dee was, at court and beyond the angels.</p></a></li>
+          <li class="video"><a href="https://www.youtube.com/watch?v=6mRDp37eC_o" target="_blank" rel="noopener noreferrer">
+            <span class="thumb"><img src="https://i.ytimg.com/vi/6mRDp37eC_o/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="22" fill="rgba(0,0,0,.55)" stroke="rgba(255,255,255,.7)" stroke-width="1.5"/><path d="M19 15l15 9-15 9z" fill="#fff"/></svg></span>
+            <b>What is Enochian Magic? The Tools and Rituals that John Dee used to Speak with Angels</b><small>ESOTERICA · 2023 · pairs with week 2</small><p>The 1580s sessions with Kelley, the furniture of the practice, and the first angelic revelations.</p></a></li>
+          <li class="video"><a href="https://www.youtube.com/watch?v=Tx4MjNnWD94" target="_blank" rel="noopener noreferrer">
+            <span class="thumb"><img src="https://i.ytimg.com/vi/Tx4MjNnWD94/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="22" fill="rgba(0,0,0,.55)" stroke="rgba(255,255,255,.7)" stroke-width="1.5"/><path d="M19 15l15 9-15 9z" fill="#fff"/></svg></span>
+            <b>Enochian Magic in Modern Occultism: From Dee to Chaos Magick and Beyond</b><small>Angela's Symposium with Esoterica · 2025 · pairs with week 3</small><p>How Dee's material passed through the Golden Dawn and Crowley into later practice.</p></a></li>
+          <li class="video"><a href="https://www.youtube.com/watch?v=Ns9zLz1x-y4" target="_blank" rel="noopener noreferrer">
+            <span class="thumb"><img src="https://i.ytimg.com/vi/Ns9zLz1x-y4/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="22" fill="rgba(0,0,0,.55)" stroke="rgba(255,255,255,.7)" stroke-width="1.5"/><path d="M19 15l15 9-15 9z" fill="#fff"/></svg></span>
+            <b>The Enochian Language: History and Analysis of the Magic Angelic Alphabet</b><small>ESOTERICA · 2021 · pairs with week 11</small><p>Where the angelic script came from and what its letters look like.</p></a></li>
+          <li class="video"><a href="https://www.youtube.com/watch?v=4hnuB9MCpmY" target="_blank" rel="noopener noreferrer">
+            <span class="thumb"><img src="https://i.ytimg.com/vi/4hnuB9MCpmY/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="22" fill="rgba(0,0,0,.55)" stroke="rgba(255,255,255,.7)" stroke-width="1.5"/><path d="M19 15l15 9-15 9z" fill="#fff"/></svg></span>
+            <b>What is Enochian Magic? John Dee and the Book of Enoch / The Liber Loagaeth</b><small>ESOTERICA · 2021 · pairs with week 11</small><p>The grid-filled book of angelic letters that sits behind the tables.</p></a></li>
+        </ul>
+      </section>
+
+      <section>
+        <h3>Practise with care</h3>
+        <p class="careful">This programme is study and contemplation. Traditional practitioners go further and recite Dee's invocations, which Skinner and Rankine transcribe in full. If you take that step, do it within a tradition or with an experienced teacher. Keep the practice balanced with ordinary life, and if it ever leaves you unsettled or distressed, stop and talk to someone you trust.</p>
+        <p class="src">Photos from Unsplash, credited beside each image. Source text: Skinner &amp; Rankine, <em>The Practical Angel Magic of John Dee's Enochian Tables</em> (2004).</p>
+      </section>
+
+      <div class="about-foot">
+        <button type="button" class="btn primary" id="practiceGo">Begin at the cross</button>
+      </div>
+    </div>
+  </article>
+</div>
 
 <div class="studio" id="studio" role="dialog" aria-modal="true" aria-labelledby="studioTitle" hidden>
   <div class="studio-backdrop" id="studioBackdrop"></div>
@@ -1236,6 +1523,7 @@ if (!seenGuide) openAbout();
 addEventListener('keydown', (e) => {
   if (!about.hidden){ if (e.key === 'Escape') closeAbout(); return; }
   if (!$('studio').hidden){ if (e.key === 'Escape') closeStudio(); return; }
+  if (!practice.hidden){ if (e.key === 'Escape') closePractice(); return; }
   if (e.target.closest && e.target.closest('input,textarea')) return;
   if (e.key === 'ArrowRight' || e.key === ' ' && e.target === document.body){ e.preventDefault(); goStage(stage+1); }
   else if (e.key === 'ArrowLeft'){ goStage(stage-1); }
@@ -1905,6 +2193,47 @@ $('dLink').addEventListener('click', () => {
   u += `#${currentKey}-c${selected.c}r${selected.r}`;
   copyText(u, 'Link to this square copied');
 });
+
+
+/* ---------- Practice programme ---------- */
+const practice = $('practice');
+let practiceReturn = null;
+function openPractice(){
+  practiceReturn = document.activeElement;
+  if (!about.hidden) closeAbout();
+  practice.hidden = false;
+  practice.querySelector('.about-sheet').scrollTop = 0;
+  $('practiceClose').focus();
+}
+function closePractice(){ practice.hidden = true; if (practiceReturn && practiceReturn.focus) practiceReturn.focus(); }
+$('practiceBtn').addEventListener('click', openPractice);
+$('practiceClose').addEventListener('click', closePractice);
+$('practiceBackdrop').addEventListener('click', closePractice);
+$('practiceGo').addEventListener('click', closePractice);
+$('toPractice').addEventListener('click', openPractice);
+const weeksDone = new Set(store.get('weeks', []));
+function renderProgress(){
+  practice.querySelectorAll('input[data-week]').forEach(cb => {
+    const n = +cb.dataset.week; cb.checked = weeksDone.has(n);
+    cb.closest('.week').classList.toggle('done', cb.checked);
+  });
+  $('progBar').style.width = (weeksDone.size/12*100) + '%';
+  $('progText').textContent = `${weeksDone.size} of 12 weeks`;
+}
+practice.querySelectorAll('input[data-week]').forEach(cb => cb.addEventListener('change', () => {
+  const n = +cb.dataset.week;
+  if (cb.checked) weeksDone.add(n); else weeksDone.delete(n);
+  store.set('weeks', [...weeksDone]); renderProgress();
+}));
+renderProgress();
+practice.querySelectorAll('[data-go]').forEach(b => b.addEventListener('click', () => {
+  const g = b.dataset.go;
+  closePractice();
+  if (g === 'guide') openAbout();
+  else if (g === 'share') openStudio();
+  else if (g.startsWith('stage')) goStage(+g.slice(5));
+  else { setTablet(g); goStage(Math.max(stage, 2)); }
+}));
 
 /* ---------- deep links: #water or #water-c6r7 ---------- */
 (function readHash(){
