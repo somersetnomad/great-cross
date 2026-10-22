@@ -37,4 +37,4 @@ The whole app is one static `index.html` that loads Three.js and Google Fonts fr
 
 ## Licence
 
-CC0 1.0. See `LICENSE`.
+The code and text are CC0 1.0; see `LICENSE`. The photos in `img/` are not covered by CC0. They are used under the [Unsplash License](https://unsplash.com/license), and their photographers are credited on the page.
